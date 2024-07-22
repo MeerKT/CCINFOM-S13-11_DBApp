@@ -159,6 +159,7 @@ public class Hotel{
         String guestName;
         int checkIn;
         int checkOut;
+        String discountCode = "empty";
         Scanner scan = new Scanner(System.in);
 
         //show all available rooms
@@ -222,8 +223,31 @@ public class Hotel{
                 System.out.printf("\nCheck-out time is invalid.\n\n");
         } while (checkOut <= checkIn || checkOut > max);
 
+        //user is asked if they would like to input discountCode
+        char option;
+        do {
+            System.out.printf("Would you like to input a discount code? (Y/N): ");
+            option = scan.next().charAt(0);
+            scan.nextLine();    //prevent any lingering characters from being scanned
+
+            if(option == 'Y'){
+                System.out.printf("\nInput Discount Code: ");
+                discountCode = scan.nextLine();
+
+                if(!reservationList.get(0).checkDiscountCode(discountCode))
+                    System.out.printf("\nDiscount code is invalid.\n\n");
+            }
+            else if(option == 'N'){
+                System.out.printf("\nNo discount code applied.\n\n");
+            }
+            else{
+                System.out.printf("\nOption is invalid.\n\n");
+            }
+            scan.nextLine();    //prevent any lingering characters from being scanned
+        } while (option != 'N' && !reservationList.get(0).checkDiscountCode(discountCode));
+
         //create reservation
-        this.reservationList.add(new Reservation(guestName, checkIn, checkOut, roomList.get(roomNo)));
+        this.reservationList.add(new Reservation(guestName, checkIn, checkOut, roomList.get(roomNo), discountCode));
 
         System.out.printf("\nReservation Created!\n");
     }

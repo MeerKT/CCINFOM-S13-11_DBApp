@@ -16,7 +16,7 @@ public class Reservation {
      * @param checkOut - the day the guest will check-out
      * @param chosenRoom - the room the guest will stay at
      */
-    public Reservation(String guestName, int checkIn, int checkOut, Room chosenRoom) {
+    public Reservation(String guestName, int checkIn, int checkOut, Room chosenRoom, String discountCode) {
         this.guestName = guestName;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -25,9 +25,40 @@ public class Reservation {
         this.totalPrice = (this.checkOut - this.checkIn) * this.pricePerNight;  //number of nights spent * price per night
 
         //changes the reserved status of a room up until the day before the checkout day
-        //(so that it may be possible to check-in the day of a check-out)
+        //(so that it may be possible to check in the day of a check-out)
         for(int i = checkIn - 1; i < checkOut - 1; i++){
             this.chosenRoom.changeDayAvailability(i);
+        }
+
+        applyDiscount(discountCode);
+    }
+
+    /**
+     * Apply discount based on the provided discount code
+     * @param discountCode - the discount code to apply
+     */
+    public void applyDiscount(String discountCode) {
+        boolean coversDay15or30 = false;
+
+        if(discountCode.equals(DiscountCodes.DISCOUNT_FLAT)) {
+            this.totalPrice *= 0.9; //10% discount
+        }
+        if(discountCode.equals(DiscountCodes.DISCOUNT_GET1FREE)) {
+            if (this.checkOut - this.checkIn >= 5) {
+                this.totalPrice -= this.pricePerNight; //first night is free
+            }
+        }
+        if(discountCode.equals(DiscountCodes.DISCOUNT_PAYDAY)){
+            if (this.checkIn <= 15 && this.checkOut > 15) {
+                coversDay15or30 = true;
+            }
+            else if (this.checkIn <= 30 && this.checkOut > 30) {
+                coversDay15or30 = true;
+            }
+
+            if (coversDay15or30) {
+                this.totalPrice *= 0.93; //7% discount
+            }
         }
     }
 
@@ -78,4 +109,8 @@ public class Reservation {
      * @return this.totalPrice
      */
     public float getTotalPrice() { return this.totalPrice; }
+
+    public boolean checkDiscountCode(String discountCode){
+        return discountCode.equals(DiscountCodes.DISCOUNT_FLAT) || discountCode.equals(DiscountCodes.DISCOUNT_GET1FREE) || discountCode.equals(DiscountCodes.DISCOUNT_PAYDAY);
+    }
 }
