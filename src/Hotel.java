@@ -8,22 +8,28 @@ public class Hotel{
     private String name;
     private ArrayList<Room> roomList;
     private ArrayList<Reservation> reservationList;
+    private float[] datePriceModifier;
 
     /**
      * Hotel constructor that initiailizes the hotel's name, list of rooms,
-     * and list of reservations.
+     * list of reservations, and date price modifier.
      * @param name - unique identifier for the hotel
      */
     public Hotel(String name) {
         this.name = name;
         this.roomList = new ArrayList<Room>();
         this.reservationList = new ArrayList<Reservation>();
+        this.datePriceModifier = new float[31];
+
+        //initialize all date price modifiers to 1
+        java.util.Arrays.fill(datePriceModifier, 1.0f);
     }
 
     /**
      * Algorithm for generating the room number system that follows the following pattern:
      * <p>
-     * A01, A02, ..., A10, B01, ..., E01, ... E10</p> 
+     * A01, A02, ..., A10, B01, ..., E01, ... E10</p>
+     * @param option - kind of room to generate, 1 is Standard, 2 is Deluxe, 3 is Executive
      * @param noOfRooms - the number of rooms to be generated
      * @param start - the starting value, corresponds to the number for the room that will directly be generated next
      */
@@ -247,7 +253,7 @@ public class Hotel{
         } while (option != 'N' && !reservationList.get(0).checkDiscountCode(discountCode));
 
         //create reservation
-        this.reservationList.add(new Reservation(guestName, checkIn, checkOut, roomList.get(roomNo), discountCode));
+        this.reservationList.add(new Reservation(guestName, checkIn, checkOut, roomList.get(roomNo), discountCode, this.datePriceModifier));
 
         System.out.printf("\nReservation Created!\n");
     }
@@ -279,7 +285,7 @@ public class Hotel{
 
     /**
      * function counts the amount of rooms that are unavailable on a certain date
-     * @param date is the date of which the program will check every room's availibility
+     * @param date is the date of which the program will check every room's availability
      * @return an integer value that represents the amount of rooms that are reserved on the given date
      */
 
@@ -305,12 +311,30 @@ public class Hotel{
 
     /**
      * Asks user how many rooms they would like to add to the hotel and checks
-     * if the inpiuted number is valid or not.
+     * if the inputted number is valid or not.
      * <p>
      * If valid, the method will call the generateRooms method to create the new rooms.
      * If invalid, the method will loop until the user gives a valid input.
      */
     public void addRoom(int option, int num) {
         generateRooms(option, num, getNoOfRooms()+1);
+    }
+
+    /**
+     * Changes the value for the date price modifier given a date
+     * @param date - date to changed
+     * @param modifier - the new modifier to be applied
+     */
+    public void setDatePriceModifier(int date, float modifier){
+        this.datePriceModifier[date-1] = modifier;
+    }
+
+    /**
+     * Returns the value for the date price modifier given a date
+     * @param date - date to be returned
+     * @return date a floating point value that represents the date price modifier
+     */
+    public float getDatePriceModifier(int date){
+        return this.datePriceModifier[date-1];
     }
 }

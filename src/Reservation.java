@@ -15,22 +15,35 @@ public class Reservation {
      * @param checkIn - the day the guest will check-in to their hotel room
      * @param checkOut - the day the guest will check-out
      * @param chosenRoom - the room the guest will stay at
+     * @param discountCode - string containing the possibly valid discount code
+     * @param datePriceModifier - float array containing the price modifier for each individual date
      */
-    public Reservation(String guestName, int checkIn, int checkOut, Room chosenRoom, String discountCode) {
+    public Reservation(String guestName, int checkIn, int checkOut, Room chosenRoom, String discountCode, float[] datePriceModifier) {
         this.guestName = guestName;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.chosenRoom = chosenRoom;
         this.pricePerNight = chosenRoom.getPrice();
-        this.totalPrice = (this.checkOut - this.checkIn) * this.pricePerNight;  //number of nights spent * price per night
+        computeTotalPrice(datePriceModifier);   //initializes totalPrice
+
+        //applies discount to the total price if able
+        applyDiscount(discountCode);
 
         //changes the reserved status of a room up until the day before the checkout day
         //(so that it may be possible to check in the day of a check-out)
         for(int i = checkIn - 1; i < checkOut - 1; i++){
             this.chosenRoom.changeDayAvailability(i);
         }
+    }
 
-        applyDiscount(discountCode);
+    /**
+     * Computes for the total price of the reservation
+     * @param datePriceModifier - float array containing the price modifier for each individual date
+     */
+    public void computeTotalPrice(float[] datePriceModifier){
+        for(int i = this.checkIn; i < this.checkOut; i++){
+            this.totalPrice += pricePerNight * datePriceModifier[i];
+        }
     }
 
     /**
