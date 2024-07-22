@@ -34,8 +34,8 @@ public class Reservation {
     }
 
     /**
-     * Apply discount based on the provided discount code
-     * @param discountCode - the discount code to apply
+     * Applies discount based on the given discount code
+     * @param discountCode - the discount code to be applied
      */
     public void applyDiscount(String discountCode) {
         boolean coversDay15or30 = false;
@@ -110,6 +110,11 @@ public class Reservation {
      */
     public float getTotalPrice() { return this.totalPrice; }
 
+    /**
+     * returns true if the discount code exists and false if it does not
+     * @param discountCode - the discount code to be checked
+     * @return
+     */
     public boolean checkDiscountCode(String discountCode){
         return discountCode.equals(DiscountCodes.DISCOUNT_FLAT) || discountCode.equals(DiscountCodes.DISCOUNT_GET1FREE) || discountCode.equals(DiscountCodes.DISCOUNT_PAYDAY);
     }
