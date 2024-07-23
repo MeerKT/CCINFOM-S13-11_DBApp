@@ -27,7 +27,9 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
     private removeReservationGUI removeReservesGUI;
     private roomGUI indivRoomGUI;
     private removeRoomGUI removeRoomGUI;
+    private reservePickerGUI reservationGUI;
     private JFrame currentScreen;
+    private createReservationGUI indivReservation;
 
     private Hotel hotelSearch;
     private Room roomSearch;
@@ -103,6 +105,28 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                 this.manageGUI.setActionListener(this);
                 this.manageGUI.setSelectionListener(this);
                 this.currentScreen = this.manageGUI;
+                this.gui.dispose();
+            }
+        }
+
+        else if (e.getActionCommand().equals("4 - SIMULATE BOOKING")) {
+
+            //checks if there are any hotels to make reservations to, gives an error statement if there are none
+            if(manager.getNoOfHotels() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Please create a hotel first!");
+            }
+
+            //initializes a hotel selection page
+            else
+            {
+                this.reservationGUI = new reservePickerGUI(this.manager.getHotelList());
+                this.reservationGUI.initialize();
+
+                this.reservationGUI.setActionListener(this);
+                this.reservationGUI.setSelectionListener(this);
+
+                this.currentScreen = this.reservationGUI;
                 this.gui.dispose();
             }
         }
@@ -433,7 +457,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                 this.currentScreen = this.hotelInfoGUI;
 
                 //code below executes if the list is in the manage hotel page
-            } else {
+            } else if(this.currentScreen == this.manageGUI) {
                 //finds the corresponding item in the hotel list and stores it in a temporary variable
                 for(int i = 0; i < this.manager.getNoOfHotels(); i++)
                 {
@@ -448,6 +472,25 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                 this.hotelManageGUI = new indivHotelManagerGUI(hotelSearch);
                 this.hotelManageGUI.setActionListener(this);
                 this.currentScreen = this.hotelManageGUI;
+            }
+
+            //code below executes if the list is in the pick reservation screen
+            else if(this.currentScreen == this.reservationGUI)
+            {
+                //finds the corresponding item in the hotel list and stores it in a temporary variable
+                for(int i = 0; i < this.manager.getNoOfHotels(); i++)
+                {
+                    if(this.manager.getHotelList().get(i).getName().equals(this.reservationGUI.getSelectedValue()))
+                    {
+                        hotelSearch = this.manager.getHotelList().get(i);
+                    }
+                }
+
+                //disposes the current screen and initializes an individual reservation page
+                this.currentScreen.dispose();
+                this.indivReservation = new createReservationGUI(hotelSearch);
+                this.indivReservation.setActionListener(this);
+                this.currentScreen = this.indivReservation;
             }
         }
 

@@ -13,11 +13,11 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
 public class manageHotelGUI extends JFrame {
-    ArrayList<Hotel> list;
-    JButton Exit;
-    JList<String> nameList;
-    private DefaultListModel<String> hotelList;
-    private JScrollPane listScroll;
+    protected ArrayList<Hotel> list;
+    protected JButton Exit;
+    protected JList<String> nameList;
+    protected DefaultListModel<String> hotelList;
+    protected JScrollPane listScroll;
 
     public manageHotelGUI(ArrayList<Hotel> list) {
         super("Manage Hotel Menu");
