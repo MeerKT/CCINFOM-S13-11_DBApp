@@ -88,7 +88,7 @@ public class roomGUI extends JFrame{
 
         for(int i = 0;i < this.roomHotel.getReservationList().size();i++)
         {
-            if(this.roomOfInterest.getName().equals(this.roomHotel.getReservationList().get(i).getRoom().getName()));
+            if(this.roomOfInterest.getName().equals(this.roomHotel.getReservationList().get(i).getRoom().getName()))
             {
                 isPresent = true;
                 reservedList.addElement(this.roomHotel.getReservationList().get(i).getcheckIn()+" to "+this.roomHotel.getReservationList().get(i).getcheckOut());

@@ -196,7 +196,7 @@ public class HotelManager {
             } while (choice < 1 || choice > getNoOfHotels());
 
             //calls the simulateBooking method in the Hotel class
-            this.hotelList.get(choice-1).simulateBooking();
+//            this.hotelList.get(choice-1).simulateBooking();
         }
         else
             System.out.print("No hotels have been created.\n\n");

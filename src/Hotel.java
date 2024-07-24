@@ -159,100 +159,13 @@ public class Hotel{
      * <p>
      * Method ends by creating a new instance of Reservation
      */
-    public void simulateBooking(){
-        String roomName;
-        int roomNo;
-        String guestName;
-        int checkIn;
-        int checkOut;
-        String discountCode = "empty";
-        Scanner scan = new Scanner(System.in);
+    public void simulateBooking( int roomNo,int checkIn, int checkOut, String guestName, String discountCode ){
 
-        //show all available rooms
-        System.out.printf("\nAvailable rooms:\n");
-        for (int i = 0; i < getNoOfRooms(); i++) {
-            if(!roomList.get(i).checkIfAllReserved())
-            {
-                System.out.printf("%s", roomList.get(i).getName());
-                if(roomList.get(i) instanceof Executive)
-                    System.out.print(" - Executive Room\n");
-
-
-                else if(roomList.get(i) instanceof Deluxe)
-                    System.out.print(" - Deluxe Room\n");
-
-                else
-                    System.out.print(" - Regular Room\n");
-
-
-            }
-
+        if(discountCode.isEmpty())
+        {
+            discountCode = "empty";
         }
 
-        System.out.printf("\n\n");
-
-        //user selects which room to book
-        do {
-            System.out.printf("Please input which room will be booked: ");
-            roomName = scan.nextLine();
-            roomNo = getRoomNo(roomName);
-
-            if(roomNo == -1 || this.roomList.get(roomNo).checkIfAllReserved())
-                System.out.printf("\nPlease input a valid room.\n\n");
-        } while (roomNo == -1 || this.roomList.get(roomNo).checkIfAllReserved());
-
-        //user inputs guestName
-        do {
-            System.out.printf("Please input the name of the guest: ");
-            guestName = scan.nextLine();
-
-            if(guestName.length() == 0)
-                System.out.printf("\nPlease input a valid name.\n\n");
-        } while (guestName.length() == 0);
-
-        //user inputs checkIn
-        do {
-            System.out.printf("Please input the guest's check-in day (1 - 30): ");
-            checkIn = scan.nextInt();
-
-            if(checkIn < 1 || checkIn > 30)
-                System.out.printf("\nCheck-in time is invalid.\n\n");
-        } while (checkIn < 1 || checkIn > 30 || roomList.get(roomNo).getIsReservedDay(checkIn-1));
-
-        //user inputs checkOut
-        int max = roomList.get(roomNo).checkMaxAvailable(checkIn);
-        do {
-            System.out.printf("Please input the guest's check-out day (%d - %d): ", checkIn+1, max);
-            checkOut = scan.nextInt();
-
-            if(checkOut <= checkIn || checkOut > max)
-                System.out.printf("\nCheck-out time is invalid.\n\n");
-        } while (checkOut <= checkIn || checkOut > max);
-
-        //user is asked if they would like to input discountCode
-        char option;
-        do {
-            System.out.printf("Would you like to input a discount code? (Y/N): ");
-            option = scan.next().charAt(0);
-            scan.nextLine();    //prevent any lingering characters from being scanned
-
-            if(option == 'Y'){
-                System.out.printf("\nInput Discount Code: ");
-                discountCode = scan.nextLine();
-
-                if(!reservationList.get(0).checkDiscountCode(discountCode))
-                    System.out.printf("\nDiscount code is invalid.\n\n");
-            }
-            else if(option == 'N'){
-                System.out.printf("\nNo discount code applied.\n\n");
-            }
-            else{
-                System.out.printf("\nOption is invalid.\n\n");
-            }
-            scan.nextLine();    //prevent any lingering characters from being scanned
-        } while (option != 'N' && !reservationList.get(0).checkDiscountCode(discountCode));
-
-        //create reservation
         this.reservationList.add(new Reservation(guestName, checkIn, checkOut, roomList.get(roomNo), discountCode, this.datePriceModifier));
 
         System.out.printf("\nReservation Created!\n");

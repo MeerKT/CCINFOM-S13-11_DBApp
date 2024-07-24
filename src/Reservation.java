@@ -6,8 +6,10 @@ public class Reservation {
     private int checkIn;
     private int checkOut;
     private Room chosenRoom;
+    private String discountCode;
     private float pricePerNight;
     private float totalPrice;
+    private boolean isDiscounted;
 
     /**
      * Constructor for the Reservation class
@@ -23,11 +25,13 @@ public class Reservation {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.chosenRoom = chosenRoom;
+        this.discountCode = discountCode;
         this.pricePerNight = chosenRoom.getPrice();
+        this.isDiscounted = false;
         computeTotalPrice(datePriceModifier);   //initializes totalPrice
 
         //applies discount to the total price if able
-        applyDiscount(discountCode);
+        applyDiscount(this.discountCode);
 
         //changes the reserved status of a room up until the day before the checkout day
         //(so that it may be possible to check in the day of a check-out)
@@ -55,10 +59,13 @@ public class Reservation {
 
         if(discountCode.equals(DiscountCodes.DISCOUNT_FLAT)) {
             this.totalPrice *= 0.9; //10% discount
+            this.isDiscounted = true;
         }
         if(discountCode.equals(DiscountCodes.DISCOUNT_GET1FREE)) {
             if (this.checkOut - this.checkIn >= 5) {
                 this.totalPrice -= this.pricePerNight; //first night is free
+                this.isDiscounted = true;
+
             }
         }
         if(discountCode.equals(DiscountCodes.DISCOUNT_PAYDAY)){
@@ -71,8 +78,10 @@ public class Reservation {
 
             if (coversDay15or30) {
                 this.totalPrice *= 0.93; //7% discount
+                this.isDiscounted = true;
             }
         }
+
     }
 
     /**
@@ -131,4 +140,11 @@ public class Reservation {
     public boolean checkDiscountCode(String discountCode){
         return discountCode.equals(DiscountCodes.DISCOUNT_FLAT) || discountCode.equals(DiscountCodes.DISCOUNT_GET1FREE) || discountCode.equals(DiscountCodes.DISCOUNT_PAYDAY);
     }
+
+    /**
+     *
+     * @return the boolean value that represents whether the reservation is discounted
+     */
+    public boolean getDiscount() { return this.isDiscounted; }
+
 }

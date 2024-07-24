@@ -397,7 +397,66 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
             }
 
+            else if(this.currentScreen == this.indivReservation)
+            {
+                //error checking every text field
+                if(this.indivReservation.getGuestName().getText().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(null, "Please input a valid name!");
+                }
 
+                else if(this.indivReservation.getCheckInDate() == 0 || this.indivReservation.getCheckOutDate() == 0 || (this.indivReservation.getCheckOutDate()) < this.indivReservation.getCheckInDate())
+                {
+                    JOptionPane.showMessageDialog(null, "Please input valid dates!");
+                }
+
+                else if(this.indivReservation.getRoom() == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Please input a valid room!");
+                }
+
+                else
+                {
+
+                    //looks for the real hotel that corresponds to hotelSearch
+                    for (int i = 0; i < this.manager.getHotelList().size(); i++) {
+                        if (this.hotelSearch.getName().equals(this.manager.getHotelList().get(i).getName()))
+                            hotelIndex = i;
+                    }
+
+                    boolean isReserved = false;
+
+                    for(int i = this.indivReservation.getCheckInDate()-1; i < this.indivReservation.getCheckOutDate()-1;i++  )
+                    {
+                        if(this.manager.getHotelList().get(hotelIndex).getRoomList().get(this.indivReservation.getRoom()).getIsReservedDay(this.indivReservation.getCheckInDate()-1))
+                            isReserved = true;
+                    }
+
+                    if(isReserved)
+                    {
+                        JOptionPane.showMessageDialog(null, "Room is already reserved on this timeframe!");
+                    }
+
+                    else
+                    {
+                        this.manager.getHotelList().get(hotelIndex).simulateBooking( this.indivReservation.getRoom(),this.indivReservation.getCheckInDate(), this.indivReservation.getCheckOutDate(), this.indivReservation.getGuestName().getText(), this.indivReservation.getDiscountCode().getText());
+                        int reservationIndex = 0;
+
+
+                        for (int i = 0; i < this.manager.getHotelList().get(hotelIndex).getReservationList().size(); i++) {
+                            if (this.manager.getHotelList().get(hotelIndex).getReservationList().get(i).getName().equals(this.indivReservation.getGuestName().getText())) {
+                                reservationIndex = i;
+                            }
+                        }
+
+
+                        if (this.manager.getHotelList().get(hotelIndex).getReservationList().get(reservationIndex).getDiscount()) {
+                            JOptionPane.showMessageDialog(null, "Discount applied!");
+                        }
+                        JOptionPane.showMessageDialog(null, "Reservation created!");
+                    }
+                }
+            }
         }
 
         //Exits the current screen and initializes a main menu screen

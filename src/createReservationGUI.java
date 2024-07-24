@@ -144,4 +144,40 @@ public class createReservationGUI extends JFrame {
         this.Exit.addActionListener(listener);
         this.confirmReservation.addActionListener(listener);
     }
+
+    /**
+     * function that gets the guestName textfield
+     * @return the text field that has the inputted guestName
+     */
+    public JTextField getGuestName() {
+        return this.guestName;
+    }
+
+    public int getRoom() {
+        return this.roomList.getSelectedIndex();
+    }
+
+    /**
+     *
+     * @return the text field that contains the discount code
+     */
+    public JTextField getDiscountCode() {
+        return this.discountCode;
+    }
+
+    /**
+     *
+     * @return the index of the selected item in checkInDate
+     */
+    public int getCheckInDate() {
+        return this.checkInDate.getSelectedIndex();
+    }
+
+    /**
+     *
+     * @return the index of the selected item in checkInDate
+     */
+    public int getCheckOutDate() {
+        return this.checkOutDate.getSelectedIndex();
+    }
 }
