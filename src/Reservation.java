@@ -46,7 +46,7 @@ public class Reservation {
      */
     public void computeTotalPrice(float[] datePriceModifier){
         for(int i = this.checkIn; i < this.checkOut; i++){
-            this.totalPrice += pricePerNight * datePriceModifier[i];
+            this.totalPrice += pricePerNight * datePriceModifier[i-1];
         }
     }
 
