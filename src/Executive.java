@@ -18,8 +18,9 @@ public class Executive extends Room {
      * @param newPrice - the new price of the room
      */
 
+    @Override
     public void setPrice(float newPrice)
     {
-        this.price = newPrice + (newPrice * 0.20f);
+        this.price = newPrice + (newPrice * 0.35f);
     }
 }

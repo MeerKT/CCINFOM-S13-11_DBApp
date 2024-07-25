@@ -17,7 +17,7 @@ public class Deluxe extends Room {
      * sets the base price of a room per night to a given new one and adds the deluxe modifier
      * @param newPrice - the new price of the room
      */
-
+    @Override
     public void setPrice(float newPrice)
     {
         this.price = newPrice + (newPrice * 0.20f);

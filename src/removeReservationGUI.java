@@ -63,8 +63,6 @@ public class removeReservationGUI extends JFrame {
             this.reservationList.addItem(this.hotel.getReservationList().get(i).getName());
         }
 
-        this.reservationList.addItem("Test");
-
         lblfld1.add(remove);
         lblfld1.add(this.reservationList);
         center.add(lblfld1, "Center");

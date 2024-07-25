@@ -165,10 +165,30 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
         //opens an update pricing page
         else if (e.getActionCommand().equals("4 - Update Pricing")) {
-            this.updatePriceGUI = new updatePricingGUI(hotelSearch);
-            this.updatePriceGUI.setActionListener(this);
-            this.currentScreen.dispose();
-            this.currentScreen = this.updatePriceGUI;
+
+            boolean isReserved = false;
+
+            for(int i = 0; i < hotelSearch.getNoOfRooms();i++)
+            {
+                if(hotelSearch.getRoomList().get(i).getIsReserved())
+                {
+                    isReserved = true;
+                    break;
+                }
+            }
+
+            if(isReserved)
+            {
+                JOptionPane.showMessageDialog(null, "This Hotel has some reservations, please remove them all before changing the price!");
+            }
+
+            else
+            {
+                this.updatePriceGUI = new updatePricingGUI(hotelSearch);
+                this.updatePriceGUI.setActionListener(this);
+                this.currentScreen.dispose();
+                this.currentScreen = this.updatePriceGUI;
+            }
         }
 
         //opens a remove reservation page
@@ -181,10 +201,30 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
         else if(e.getActionCommand().equals("6 - Modify Price per Date"))
         {
-            this.newPriceModifier = new priceModifierGUI(hotelSearch);
-            this.newPriceModifier.setActionListener(this);
-            this.currentScreen.dispose();
-            this.currentScreen = this.newPriceModifier;
+            boolean isReserved = false;
+
+            for(int i = 0; i < hotelSearch.getNoOfRooms();i++)
+            {
+                if(hotelSearch.getRoomList().get(i).getIsReserved())
+                {
+                    isReserved = true;
+                    break;
+                }
+            }
+
+            if(isReserved)
+            {
+                JOptionPane.showMessageDialog(null, "This Hotel has some reservations, please remove them all before changing the price!");
+            }
+
+            else
+            {
+                this.newPriceModifier = new priceModifierGUI(hotelSearch);
+                this.newPriceModifier.setActionListener(this);
+                this.currentScreen.dispose();
+                this.currentScreen = this.newPriceModifier;
+            }
+
         }
 
         //removes the hotel and goes back to the main menu
@@ -268,6 +308,10 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                 if(isValid)
                 {
                     this.manager.createHotel(this.addGUI.newName.getText() ,Integer.parseInt(this.addGUI.roomAmnt.getText()));
+                    JOptionPane.showMessageDialog(null, "Hotel Successfully Created!");
+
+                    this.initializeGUI();
+                    this.addGUI.dispose();
                 }
 
                 //error message if any of the above conditions are not met
@@ -356,9 +400,22 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                             hotelIndex = i;
                     }
 
-                    //updates the pricing of that hotel
-                    this.manager.getHotelList().get(hotelIndex).setPrice(Float.parseFloat(this.updatePriceGUI.getNewPrice().getText()));
-                    JOptionPane.showMessageDialog(null, "Price Set to " + this.updatePriceGUI.getNewPrice().getText());
+                    if(Float.parseFloat(this.updatePriceGUI.getNewPrice().getText()) < 100.0f)
+                        JOptionPane.showMessageDialog(null,"New price needs to be at least PHP 100!");
+
+                    else
+                    {
+                        //updates the pricing of that hotel
+                        this.manager.getHotelList().get(hotelIndex).setPrice(Float.parseFloat(this.updatePriceGUI.getNewPrice().getText()));
+
+                        //updates price of all existing rooms
+                        for(int i = 0; i < this.manager.getHotelList().get(hotelIndex).getNoOfRooms();i++)
+                        {
+                            this.manager.getHotelList().get(hotelIndex).getRoomList().get(i).setPrice(Float.parseFloat(this.updatePriceGUI.getNewPrice().getText()));
+                        }
+                        JOptionPane.showMessageDialog(null, "Price Set to " + this.updatePriceGUI.getNewPrice().getText());
+                    }
+
 
                     //goes back to the hotel management screen
                     this.manageGUI = new manageHotelGUI(this.manager.getHotelList());
@@ -379,7 +436,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
             //code below executes if the confirm button is in the removeReservationGUI
             else if (this.currentScreen == this.removeReservesGUI){
-                //seraches for the real hotel that corresponds to hotelSearch
+                //searches for the real hotel that corresponds to hotelSearch
                 for (int i = 0; i < this.manager.getHotelList().size(); i++) {
                     if (this.hotelSearch.getName().equals(this.manager.getHotelList().get(i).getName()))
                         hotelIndex = i;
@@ -393,6 +450,11 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
                 //deletes the reservation in the actual hotel and goes back to the manage hotel menu
                 else {
+
+                    for(int i = this.manager.getHotelList().get(hotelIndex).getReservationList().get(this.removeReservesGUI.getReservation()-1).getcheckIn(); i < this.manager.getHotelList().get(hotelIndex).getReservationList().get(this.removeReservesGUI.getReservation()-1).getcheckOut(); i++){
+                        this.manager.getHotelList().get(hotelIndex).getReservationList().get(this.removeReservesGUI.getReservation()-1).getRoom().changeDayAvailability(i-1);
+                    }
+
                     this.manager.getHotelList().get(hotelIndex).getReservationList().remove(this.removeReservesGUI.getReservation()-1);
                     JOptionPane.showMessageDialog(null, "Successfully Deleted Reservation!");
 
