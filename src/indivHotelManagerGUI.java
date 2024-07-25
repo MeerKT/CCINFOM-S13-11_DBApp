@@ -19,6 +19,7 @@ public class indivHotelManagerGUI extends JFrame {
     private JButton roomRemove;
     private JButton updatePrice;
     private JButton removeRes;
+    private JButton modifyPrice;
     private JButton removeHotel;
     private JButton Exit;
 
@@ -69,7 +70,8 @@ public class indivHotelManagerGUI extends JFrame {
         this.roomRemove = new JButton("3 - Remove Room");
         this.updatePrice = new JButton("4 - Update Pricing");
         this.removeRes = new JButton("5 - Remove Reservation");
-        this.removeHotel = new JButton("6 - Remove Hotel");
+        this.modifyPrice = new JButton("6 - Modify Price per Date");
+        this.removeHotel = new JButton("7 - Remove Hotel");
         JPanel holder = new JPanel(new GridLayout(8, 1));
         holder.add(Prompt);
         holder.add(this.Add);
@@ -77,6 +79,7 @@ public class indivHotelManagerGUI extends JFrame {
         holder.add(this.roomRemove);
         holder.add(this.updatePrice);
         holder.add(this.removeRes);
+        holder.add(this.modifyPrice);
         holder.add(this.removeHotel);
         center.add(holder);
     }
@@ -89,5 +92,6 @@ public class indivHotelManagerGUI extends JFrame {
         this.updatePrice.addActionListener(listener);
         this.removeRes.addActionListener(listener);
         this.removeHotel.addActionListener(listener);
+        this.modifyPrice.addActionListener(listener);
     }
 }

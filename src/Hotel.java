@@ -239,7 +239,7 @@ public class Hotel{
      * @param modifier - the new modifier to be applied
      */
     public void setDatePriceModifier(int date, float modifier){
-        this.datePriceModifier[date-1] = modifier;
+        this.datePriceModifier[date-1] = modifier/100;
     }
 
     /**

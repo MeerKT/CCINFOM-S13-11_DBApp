@@ -150,6 +150,10 @@ public class indivHotelInfoGUI extends JFrame {
         this.dateList.addItemListener(listener);
 
     }
+    public void setreservationListListener(ItemListener listener)
+    {
+        this.reservationList.addItemListener(listener);
+    }
 
     /**
      * function that attaches an item listener to the roomList ComboBox in the JFrame
@@ -177,5 +181,12 @@ public class indivHotelInfoGUI extends JFrame {
      * @return - the roomList combo box
      */
     public String getSelectedRoom() { return (String) this.roomList.getSelectedItem(); }
+
+    /**
+     *
+     * @return the int value of the index of the selected reservation
+     */
+    public int getSelectedReservation(){ return this.reservationList.getSelectedIndex(); }
+    public Object getReservation(){ return this.reservationList; }
 }
 

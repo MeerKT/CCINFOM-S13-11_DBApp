@@ -30,6 +30,8 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
     private reservePickerGUI reservationGUI;
     private JFrame currentScreen;
     private createReservationGUI indivReservation;
+    private  priceModifierGUI newPriceModifier;
+    private reservationGUI reservationInfo;
 
     private Hotel hotelSearch;
     private Room roomSearch;
@@ -177,8 +179,16 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
             this.currentScreen = this.removeReservesGUI;
         }
 
+        else if(e.getActionCommand().equals("6 - Modify Price per Date"))
+        {
+            this.newPriceModifier = new priceModifierGUI(hotelSearch);
+            this.newPriceModifier.setActionListener(this);
+            this.currentScreen.dispose();
+            this.currentScreen = this.newPriceModifier;
+        }
+
         //removes the hotel and goes back to the main menu
-        else if (e.getActionCommand().equals("6 - Remove Hotel")) {
+        else if (e.getActionCommand().equals("7 - Remove Hotel")) {
 
             //searches for the real hotel that corresponds to the temporary hotel
             for (int i = 0; i < this.manager.getHotelList().size(); i++) {
@@ -439,7 +449,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
                     else
                     {
-                        this.manager.getHotelList().get(hotelIndex).simulateBooking( this.indivReservation.getRoom(),this.indivReservation.getCheckInDate(), this.indivReservation.getCheckOutDate(), this.indivReservation.getGuestName().getText(), this.indivReservation.getDiscountCode().getText());
+                        this.manager.getHotelList().get(hotelIndex).simulateBooking( this.indivReservation.getRoom()-1,this.indivReservation.getCheckInDate(), this.indivReservation.getCheckOutDate(), this.indivReservation.getGuestName().getText(), this.indivReservation.getDiscountCode().getText());
                         int reservationIndex = 0;
 
 
@@ -454,7 +464,49 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                             JOptionPane.showMessageDialog(null, "Discount applied!");
                         }
                         JOptionPane.showMessageDialog(null, "Reservation created!");
+
+                        this.manageGUI = new manageHotelGUI(this.manager.getHotelList());
+                        this.manageGUI.initialize();
+                        this.manageGUI.setActionListener(this);
+                        this.manageGUI.setSelectionListener(this);
+                        this.currentScreen = this.manageGUI;
+                        this.indivReservation.dispose();
                     }
+                }
+            }
+
+            else if(this.currentScreen == this.newPriceModifier)
+            {
+                try{
+                    if(this.newPriceModifier.getDate() == 0)
+                        JOptionPane.showMessageDialog(null, "Please input an actual date!");
+
+                    else if(Integer.parseInt(this.newPriceModifier.getModifierAmnt().getText()) < 50 || Integer.parseInt(this.newPriceModifier.getModifierAmnt().getText()) > 150  )
+                        JOptionPane.showMessageDialog(null, "Please input a valid modifier!");
+
+                    else
+                    {
+                        for (int i = 0; i < this.manager.getHotelList().size(); i++) {
+                            if (this.hotelSearch.getName().equals(this.manager.getHotelList().get(i).getName()))
+                                hotelIndex = i;
+                        }
+
+                        this.manager.getHotelList().get(hotelIndex).setDatePriceModifier(this.newPriceModifier.getDate(), Float.parseFloat(this.newPriceModifier.getModifierAmnt().getText()));
+                        JOptionPane.showMessageDialog(null,"Modifier has been applied!");
+
+                        this.manageGUI = new manageHotelGUI(this.manager.getHotelList());
+                        this.manageGUI.initialize();
+                        this.manageGUI.setActionListener(this);
+                        this.manageGUI.setSelectionListener(this);
+                        this.currentScreen = this.manageGUI;
+                        this.newPriceModifier.dispose();
+
+                    }
+
+                }
+                catch(NumberFormatException f)
+                {
+                    JOptionPane.showMessageDialog(null,"Please input an actual number!");
                 }
             }
         }
@@ -512,6 +564,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
                 this.hotelInfoGUI.setdateListItemListener(new dateListListener(this.hotelInfoGUI));
                 this.hotelInfoGUI.setroomListItemListener(this);
+                this.hotelInfoGUI.setreservationListListener(this);
 
                 this.currentScreen = this.hotelInfoGUI;
 
@@ -571,7 +624,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
      */
     public void itemStateChanged(ItemEvent e) {
         //the code below executes when the user selects the item in the dropdown in the hotel info screen
-        if(e.getStateChange() == ItemEvent.SELECTED && this.currentScreen == this.hotelInfoGUI)
+        if(e.getStateChange() == ItemEvent.SELECTED && this.currentScreen == this.hotelInfoGUI && e.getSource() != this.hotelInfoGUI.getReservation())
         {
             //the loop finds the room that has the same name as the corresponding item
             for(int i = 0; i < this.hotelSearch.getNoOfRooms();i++)
@@ -588,6 +641,14 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
             indivRoomGUI.setActionListener(this);
             this.currentScreen = this.indivRoomGUI;
 
+        }
+
+        else if(e.getStateChange() == ItemEvent.SELECTED && e.getSource() == this.hotelInfoGUI.getReservation()  && this.currentScreen == this.hotelInfoGUI )
+        {
+            this.currentScreen.dispose();
+            reservationInfo = new reservationGUI(hotelSearch.getReservationList().get(this.hotelInfoGUI.getSelectedReservation()-1));
+            reservationInfo.setActionListener(this);
+            this.currentScreen = this.reservationInfo;
         }
     }
 
