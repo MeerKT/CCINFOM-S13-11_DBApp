@@ -201,7 +201,6 @@ public class Hotel{
      * @param date is the date of which the program will check every room's availability
      * @return an integer value that represents the amount of rooms that are reserved on the given date
      */
-
     public int getReservedRoomCount(int date)
     {
         int roomCounter = 0;
@@ -239,7 +238,7 @@ public class Hotel{
      * @param modifier - the new modifier to be applied
      */
     public void setDatePriceModifier(int date, float modifier){
-        this.datePriceModifier[date-1] = modifier/100;
+        this.datePriceModifier[date-1] = modifier/100.0f;
     }
 
     /**
