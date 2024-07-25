@@ -383,32 +383,36 @@ public class HotelManager {
                 //modify price per date
                 else if(choice == 7)
                 {
-                    //print all dates and their modifiers
-                    System.out.println("Dates and their Modifiers:");
-                    for(int i = 0; i < 31; i++){
-                        System.out.printf("%d - %.0f%%", i+1, this.hotelList.get(hotelChoice-1).getDatePriceModifier(i) * 100);
+                    if(this.hotelList.get(hotelChoice-1).getReservationCount() != 0)
+                        System.out.printf("Price cannot be adjusted as there is still at least 1 room with a reservation.\n\n");
+                    else{
+                        //print all dates and their modifiers
+                        System.out.println("Dates and their Modifiers:");
+                        for(int i = 0; i < 31; i++){
+                            System.out.printf("%d - %.0f%%", i+1, this.hotelList.get(hotelChoice-1).getDatePriceModifier(i) * 100);
+                        }
+                        do{
+                            System.out.printf("\nPlease select the date you would like to modify: ");
+                            dateChoice = scan.nextInt();
+                            scan.nextLine();
+
+                            if(dateChoice < 1 || dateChoice > 31){
+                                System.out.printf("Invalid input.\n\n");
+                            }
+                        }while(dateChoice < 1 || dateChoice > 31);
+
+                        do{
+                            System.out.printf("\nWhat will be its new modifier? (50 - 150): ");
+                            modifierChoice = scan.nextInt();
+                            scan.nextLine();
+
+                            if(modifierChoice < 50 || modifierChoice > 150){
+                                System.out.printf("Invalid input.\n\n");
+                            }
+                        }while(modifierChoice < 50 || modifierChoice > 150);
+
+                        this.hotelList.get(hotelChoice-1).setDatePriceModifier(dateChoice, modifierChoice);
                     }
-                    do{
-                        System.out.printf("\nPlease select the date you would like to modify: ");
-                        dateChoice = scan.nextInt();
-                        scan.nextLine();
-
-                        if(dateChoice < 1 || dateChoice > 31){
-                            System.out.printf("Invalid input.\n\n");
-                        }
-                    }while(dateChoice < 1 || dateChoice > 31);
-
-                    do{
-                        System.out.printf("\nWhat will be its new modifier? (50 - 150): ");
-                        modifierChoice = scan.nextInt();
-                        scan.nextLine();
-
-                        if(modifierChoice < 50 || modifierChoice > 150){
-                            System.out.printf("Invalid input.\n\n");
-                        }
-                    }while(modifierChoice < 50 || modifierChoice > 150);
-
-                    this.hotelList.get(hotelChoice-1).setDatePriceModifier(dateChoice, modifierChoice);
                 }
             }while(choice != 6 && choice != 8);
         }
