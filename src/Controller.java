@@ -316,7 +316,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
                 //error message if any of the above conditions are not met
                 else
-                    System.out.println("Not Valid!");
+                    JOptionPane.showMessageDialog(null, "Inputs not valid! Please make sure the hotel name is unique and that it has only 50 or less rooms!");
             }
 
             // code that executes if the confirm button is in the add room GUI
@@ -498,9 +498,9 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
                     boolean isReserved = false;
 
-                    for(int i = this.indivReservation.getCheckInDate()-1; i < this.indivReservation.getCheckOutDate()-1;i++  )
+                    for(int i = this.indivReservation.getCheckInDate(); i < this.indivReservation.getCheckOutDate();i++  )
                     {
-                        if(this.manager.getHotelList().get(hotelIndex).getRoomList().get(this.indivReservation.getRoom()).getIsReservedDay(this.indivReservation.getCheckInDate()-1))
+                        if(this.manager.getHotelList().get(hotelIndex).getRoomList().get(this.indivReservation.getRoom()-1).getIsReservedDay(i))
                             isReserved = true;
                     }
 
@@ -527,11 +527,10 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                         }
                         JOptionPane.showMessageDialog(null, "Reservation created!");
 
-                        this.manageGUI = new manageHotelGUI(this.manager.getHotelList());
-                        this.manageGUI.initialize();
-                        this.manageGUI.setActionListener(this);
-                        this.manageGUI.setSelectionListener(this);
-                        this.currentScreen = this.manageGUI;
+                        this.reservationGUI = new reservePickerGUI(this.manager.getHotelList());
+                        this.reservationGUI.setActionListener(this);
+                        this.reservationGUI.setSelectionListener(this);
+                        this.currentScreen = this.reservationGUI;
                         this.indivReservation.dispose();
                     }
                 }

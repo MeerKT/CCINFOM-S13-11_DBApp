@@ -20,7 +20,7 @@ public class reservationGUI extends JFrame{
         this.setLayout(new BorderLayout());
         this.setVisible(true);
         this.setResizable(false);
-        this.setSize(400, 300);
+        this.setSize(600, 300);
         this.setDefaultCloseOperation(3);
         this.initialize();
     }
@@ -61,18 +61,19 @@ public class reservationGUI extends JFrame{
         north.add(Title);
 
         //INITIALIZES CONTAINER THAT HOLDS ALL ROOM INFORMATION AND ADDS IT TO CENTER PANEL
-        JPanel container = new JPanel(new GridLayout(4, 1));
+        JPanel container = new JPanel(new GridLayout(5, 1));
         JLabel reservationName = new JLabel("Name of Guest: "+ this.reservation.getName());
 
         JLabel checkIn = new JLabel("Check-In Day: " + this.reservation.getcheckIn());
         JLabel checkOut = new JLabel("Check-Out Day: " + this.reservation.getcheckOut());
+        JLabel roomName = new JLabel("Room Name: " + this.reservation.getRoom().getName());
 
-        JLabel PriceBreakdown = new JLabel("Total Price Breakdown: "+ (this.reservation.getcheckOut() - this.reservation.getcheckIn()) +" nights * PHP " + this.reservation.getRoom().getPrice() + " = PHP "+this.reservation.getTotalPrice());
-
+        JLabel PriceBreakdown = new JLabel("Total Price Breakdown: "+ (this.reservation.getcheckOut() - this.reservation.getcheckIn()) +" nights * PHP " + this.reservation.getRoom().getPrice() + " + Date Modifiers and Discounts = PHP "+this.reservation.getTotalPrice());
 
         container.add(reservationName);
         container.add(checkIn);
         container.add(checkOut);
+        container.add(roomName);
         container.add(PriceBreakdown);
         center.add(container);
     }
