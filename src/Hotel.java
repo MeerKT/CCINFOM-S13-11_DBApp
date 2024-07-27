@@ -167,8 +167,6 @@ public class Hotel{
         }
 
         this.reservationList.add(new Reservation(guestName, checkIn, checkOut, roomList.get(roomNo), discountCode, this.datePriceModifier));
-
-        System.out.printf("\nReservation Created!\n");
     }
 
     /**

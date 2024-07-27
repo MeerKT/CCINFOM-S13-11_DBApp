@@ -290,33 +290,39 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
             //code that executes if the confirm button is pressed in the add hotel GUI
             else if(this.currentScreen == this.addGUI)
             {
-                boolean isValid = true; //validator for the hotel's name (checks if unique)
+               try{
+                   boolean isValid = true; //validator for the hotel's name (checks if unique)
 
-                //checks the hotel list if the name is unique
-                for (int i = 0; i < this.manager.getHotelList().size(); i++) {
-                    if (this.addGUI.newName.getText().equals(this.manager.getHotelList().get(i).getName())) {
-                        isValid = false;
-                    }
-                }
+                   //checks the hotel list if the name is unique
+                   for (int i = 0; i < this.manager.getHotelList().size(); i++) {
+                       if (this.addGUI.newName.getText().equals(this.manager.getHotelList().get(i).getName())) {
+                           isValid = false;
+                       }
+                   }
 
-                // checks if the amount of rooms is below 50 and above 1
-                if(Integer.parseInt(this.addGUI.roomAmnt.getText()) < 1 || Integer.parseInt(this.addGUI.roomAmnt.getText()) > 50){
-                    isValid = false;
-                }
+                   // checks if the amount of rooms is below 50 and above 1
+                   if(Integer.parseInt(this.addGUI.roomAmnt.getText()) < 1 || Integer.parseInt(this.addGUI.roomAmnt.getText()) > 50){
+                       isValid = false;
+                   }
 
-                //adds the hotel to the list
-                if(isValid)
-                {
-                    this.manager.createHotel(this.addGUI.newName.getText() ,Integer.parseInt(this.addGUI.roomAmnt.getText()));
-                    JOptionPane.showMessageDialog(null, "Hotel Successfully Created!");
+                   //adds the hotel to the list
+                   if(isValid)
+                   {
+                       this.manager.createHotel(this.addGUI.newName.getText() ,Integer.parseInt(this.addGUI.roomAmnt.getText()));
+                       JOptionPane.showMessageDialog(null, "Hotel Successfully Created!");
 
-                    this.initializeGUI();
-                    this.addGUI.dispose();
-                }
+                       this.initializeGUI();
+                       this.addGUI.dispose();
+                   }
 
-                //error message if any of the above conditions are not met
-                else
-                    JOptionPane.showMessageDialog(null, "Inputs not valid! Please make sure the hotel name is unique and that it has only 50 or less rooms!");
+                   //error message if any of the above conditions are not met
+                   else
+                       JOptionPane.showMessageDialog(null, "Inputs not valid! Please make sure the hotel name is unique and that it has only 50 or less rooms!");
+               }
+               catch(NumberFormatException f)
+               {
+                   JOptionPane.showMessageDialog(null, "Please make sure your room input is a number!");
+               }
             }
 
             // code that executes if the confirm button is in the add room GUI
