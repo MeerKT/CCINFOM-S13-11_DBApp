@@ -8,6 +8,7 @@ public class Hotel{
     private String name;
     private ArrayList<Room> roomList;
     private ArrayList<Reservation> reservationList;
+    private float basePrice;
     private float[] datePriceModifier;
 
     /**
@@ -20,6 +21,7 @@ public class Hotel{
         this.roomList = new ArrayList<Room>();
         this.reservationList = new ArrayList<Reservation>();
         this.datePriceModifier = new float[31];
+        this.basePrice = 1299.0f;
 
         //initialize all date price modifiers to 1
         java.util.Arrays.fill(datePriceModifier, 1.0f);
@@ -70,13 +72,13 @@ public class Hotel{
                     switch(option) {
                         default:
                             //Character.toString allows for string concatenation
-                            this.roomList.add(new Room(Character.toString(letter) + 0 + j));    //adds a 0 in between the floor letter and the number value
+                            this.roomList.add(new Room(Character.toString(letter) + 0 + j, this.basePrice));    //adds a 0 in between the floor letter and the number value
                             break;
                         case(2):
-                            this.roomList.add(new Deluxe(Character.toString(letter) + 0 + j));    //adds a 0 in between the floor letter and the number value
+                            this.roomList.add(new Deluxe(Character.toString(letter) + 0 + j , this.basePrice));    //adds a 0 in between the floor letter and the number value
                             break;
                         case(3):
-                            this.roomList.add(new Executive(Character.toString(letter) + 0 + j));    //adds a 0 in between the floor letter and the number value
+                            this.roomList.add(new Executive(Character.toString(letter) + 0 + j, this.basePrice));    //adds a 0 in between the floor letter and the number value
                             break;
                     }
 
@@ -85,17 +87,17 @@ public class Hotel{
                 else{
                     switch(option) {
                         default:
-                            this.roomList.add(new Room(Character.toString(letter) + j));
+                            this.roomList.add(new Room(Character.toString(letter) + j, this.basePrice));
                             start = 1;
                             break;
 
                         case(2):
-                            this.roomList.add(new Deluxe(Character.toString(letter) + j));
+                            this.roomList.add(new Deluxe(Character.toString(letter) + j, this.basePrice));
                             start = 1;
                             break;
 
                         case(3):
-                            this.roomList.add(new Executive(Character.toString(letter) + j));
+                            this.roomList.add(new Executive(Character.toString(letter) + j, this.basePrice));
                             start = 1;
                             break;
                     }
@@ -148,9 +150,19 @@ public class Hotel{
      * @param newPrice - the new price to be set for every room in the hotel
      */
     public void setPrice(float newPrice) {
-        for(int i = 0; i < this.roomList.size();i++)
+        for (int i = 0; i < this.roomList.size(); i++)
             this.roomList.get(i).setPrice(newPrice);
-        }
+    }
+
+
+    /**
+     * sets the base price parameter
+     * @param newBasePrice represents the new base price of the hotel
+     */
+    public void setBasePrice(float newBasePrice)
+    {
+        this.basePrice = newBasePrice;
+    }
 
     /**
      * Shows the user the list of available rooms and asks the user for all necessary

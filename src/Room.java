@@ -14,9 +14,9 @@ public class Room {
      * no rooms have been reserved at the time of creating them.
      * @param name - the unique identifier for a room following a specific naming convention
      */
-    public Room(String name) {
+    public Room(String name, float price) {
         this.name = name;
-        this.price = 1299.0f;
+        this.price = price;
         this.isReserved = new Boolean[31];
 
         //initialize all elements of the array to false

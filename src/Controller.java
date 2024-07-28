@@ -413,12 +413,8 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                     {
                         //updates the pricing of that hotel
                         this.manager.getHotelList().get(hotelIndex).setPrice(Float.parseFloat(this.updatePriceGUI.getNewPrice().getText()));
+                        this.manager.getHotelList().get(hotelIndex).setBasePrice(Float.parseFloat(this.updatePriceGUI.getNewPrice().getText()));
 
-                        //updates price of all existing rooms
-                        for(int i = 0; i < this.manager.getHotelList().get(hotelIndex).getNoOfRooms();i++)
-                        {
-                            this.manager.getHotelList().get(hotelIndex).getRoomList().get(i).setPrice(Float.parseFloat(this.updatePriceGUI.getNewPrice().getText()));
-                        }
                         JOptionPane.showMessageDialog(null, "Price Set to " + this.updatePriceGUI.getNewPrice().getText());
                     }
 

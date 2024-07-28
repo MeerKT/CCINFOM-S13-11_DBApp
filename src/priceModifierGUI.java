@@ -53,7 +53,7 @@ public class priceModifierGUI extends JFrame {
         south.add(this.Exit);
 
         JPanel lblfld1 = new JPanel(new FlowLayout());
-        JLabel modifierPrompt = new JLabel("Please enter a new modifier(50 - 150%");
+        JLabel modifierPrompt = new JLabel("Please enter a new modifier(50 - 150%)");
         this.modifierAmnt = new JTextField();
         this.modifierAmnt.setColumns(5);
 

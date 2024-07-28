@@ -8,8 +8,8 @@ public class Deluxe extends Room {
      * @param name - the unique identifier for a room following a specific naming convention
      */
 
-    public Deluxe(String name) {
-        super(name);
+    public Deluxe(String name, float price) {
+        super(name, price);
         this.price += (this.price * 0.20f);
     }
 

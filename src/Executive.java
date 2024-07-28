@@ -8,8 +8,8 @@ public class Executive extends Room {
      *
      * @param name - the unique identifier for a room following a specific naming convention
      */
-    public Executive(String name) {
-        super(name);
+    public Executive(String name,float price) {
+        super(name, price);
         this.price += (this.price * 0.35f);
     }
 
