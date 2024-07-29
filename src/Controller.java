@@ -317,7 +317,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
                    //error message if any of the above conditions are not met
                    else
-                       JOptionPane.showMessageDialog(null, "Inputs not valid! Please make sure the hotel name is unique and that it has only 50 or less rooms!");
+                       JOptionPane.showMessageDialog(null, "Inputs not valid! Please make sure the hotel name is unique and that it has 1-50 rooms!");
                }
                catch(NumberFormatException f)
                {
@@ -383,17 +383,27 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                     if (this.hotelSearch.getName().equals(this.manager.getHotelList().get(i).getName()))
                         hotelIndex = i;
                 }
-                //removes the selected room in the real hotel
-                this.manager.getHotelList().get(hotelIndex).getRoomList().remove(this.removeRoomGUI.getroomOption()-1);
-                JOptionPane.showMessageDialog(null, "Room Successfully Deleted!");
 
-                // goes back to the hotel manager screen
-                this.manageGUI = new manageHotelGUI(this.manager.getHotelList());
-                this.manageGUI.initialize();
-                this.manageGUI.setActionListener(this);
-                this.manageGUI.setSelectionListener(this);
-                this.currentScreen = this.manageGUI;
-                this.removeRoomGUI.dispose();
+                if(this.manager.getHotelList().get(hotelIndex).getRoomList().get(this.removeRoomGUI.getroomOption()-1).getIsReserved())
+                {
+                    JOptionPane.showMessageDialog(null, "Reservation present! Room wasn't deleted!");
+                }
+
+                else
+                {
+                    //removes the selected room in the real hotel
+                    this.manager.getHotelList().get(hotelIndex).getRoomList().remove(this.removeRoomGUI.getroomOption()-1);
+                    JOptionPane.showMessageDialog(null, "Room Successfully Deleted!");
+
+                    // goes back to the hotel manager screen
+                    this.manageGUI = new manageHotelGUI(this.manager.getHotelList());
+                    this.manageGUI.initialize();
+                    this.manageGUI.setActionListener(this);
+                    this.manageGUI.setSelectionListener(this);
+                    this.currentScreen = this.manageGUI;
+                    this.removeRoomGUI.dispose();
+                }
+
             }
 
             //the code below executes if the confirm button is in the update pricing GUI
