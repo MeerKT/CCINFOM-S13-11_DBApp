@@ -95,7 +95,7 @@ public class roomGUI extends JFrame{
         north.add(Title);
 
         //INITIALIZES CONTAINER THAT HOLDS ALL ROOM INFORMATION AND ADDS IT TO CENTER PANEL
-        JPanel container = new JPanel(new GridLayout(4, 1));
+        JPanel container = new JPanel(new GridLayout(5, 1));
         JLabel roomName = new JLabel("Name of Room: "+ this.roomOfInterest.getName());
 
         //Checks what type of room roomOfInterest is
@@ -114,6 +114,7 @@ public class roomGUI extends JFrame{
         JLabel priceOfRoom = new JLabel("Price of Room: " + this.roomOfInterest.getPrice());
 
         reservedList = new DefaultListModel<String>();
+        JLabel roomAvail = new JLabel("Room is unavailable on the following dates: ");
 
         for(int i = 0;i < this.roomHotel.getReservationList().size();i++)
         {
@@ -133,6 +134,7 @@ public class roomGUI extends JFrame{
         container.add(roomName);
         container.add(roomType);
         container.add(priceOfRoom);
+        container.add(roomAvail);
         container.add(listScroll);
         center.add(container);
     }
