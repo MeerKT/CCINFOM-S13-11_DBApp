@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * class responsible for implementing visual interface for remove room functionalities
+ */
 public class removeRoomGUI extends JFrame {
     private JButton Exit;
     private JButton confirm;
@@ -18,7 +21,10 @@ public class removeRoomGUI extends JFrame {
     private Hotel hotel;
 
 
-
+    /**
+     * constructor that initializes visibility of visual elements, hotel and page size
+     * @param hotel is the hotel that will remove the selected room
+     */
     public removeRoomGUI(Hotel hotel) {
         super("Remove a Room");
         this.setLayout(new BorderLayout());
@@ -30,6 +36,9 @@ public class removeRoomGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * initializes all visual eleemnts
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -73,13 +82,24 @@ public class removeRoomGUI extends JFrame {
         center.add(lblfld2, "South");
     }
 
+    /**
+     * adds action listeners to all buttons in the page
+     * @param listener is the object that will perform some action based on the button that is pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
         this.confirm.addActionListener(listener);
     }
 
-
+    /**
+     * returns the selected room index
+     * @return an int value that represents the index of the selected option in the roomList dropdown menu
+     */
     public int getroomOption() { return this.roomList.getSelectedIndex(); }
 
+    /**
+     * returns the hotel
+     * @return a Hotel that represents hte hotel that was passed to this class
+     */
     public Hotel getHotel() {return this.hotel;}
 }

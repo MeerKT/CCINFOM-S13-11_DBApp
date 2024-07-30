@@ -5,11 +5,23 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * class responsible for implementing visual interface for reservation information
+ */
 public class reservationGUI extends JFrame{
+    /**
+     * exit button
+     */
     private JButton Exit;
+    /**
+     * reservation that will be viewed
+     */
     private Reservation reservation;
 
-
+    /**
+     * constructor function that initializes reservation, page size and visibility of all visual elements
+     * @param reservation is the reservation that will be viewed
+     */
     public reservationGUI(Reservation reservation) {
         super();
 
@@ -25,6 +37,9 @@ public class reservationGUI extends JFrame{
         this.initialize();
     }
 
+    /**
+     * function initializes all visual elements
+     */
     public void initialize() {
         //INITIALIZES SOUTH PANEL
         JPanel south = new JPanel();
@@ -82,7 +97,6 @@ public class reservationGUI extends JFrame{
      * function attaches action listener to the buttons in the JFame
      * @param listener is the listener that will be told  when a certain button has been pressed
      */
-
     public void setActionListener(ActionListener listener) { this.Exit.addActionListener(listener); }
 
 

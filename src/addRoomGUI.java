@@ -1,7 +1,4 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,14 +12,35 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * visual interface for the addRoom functionalities of the program
+ */
 public class addRoomGUI extends JFrame {
+    /**
+     * the exit button
+     */
     private JButton Exit;
+    /**
+     * the confirm button
+     */
     private JButton confirm;
+    /**
+     * text field where the user types how many rooms they would like to add
+     */
     private JTextField Amnt;
+    /**
+     * dropdown where the user chooses what kind of room that they want
+     */
     private JComboBox<String> roomOption;
+    /**
+     * the hotel where these rooms are added to
+     */
     private Hotel hotel;
 
-
+    /**
+     * constructor that initializes the hotel that will receive the rooms, page size and visibility of visual elements
+     * @param hotel is the hotel that the generated rooms will be added to
+     */
     public addRoomGUI(Hotel hotel) {
         super("Add Rooms");
         this.setLayout(new BorderLayout());
@@ -34,6 +52,9 @@ public class addRoomGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * initialize function that is responsible for creating all the visual elements of the page
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -73,14 +94,30 @@ public class addRoomGUI extends JFrame {
         center.add(lblfld2, "South");
     }
 
+    /**
+     * function that attaches an action listener to all the buttons in the page
+     * @param listener is the object that will perform corresponding actions based on the button that is pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
         this.confirm.addActionListener(listener);
     }
 
+    /**
+     * function that returns the JTextfield with the anount of rooms
+     * @return the JTextfield where the user typed the amount of rooms they want added to the hotel
+     */
     public JTextField getAmnt() {  return this.Amnt; }
 
+    /**
+     * function that returns the index of the roomOption JCombobox
+     * @return an int value that represents the index of the selected option of the roomOption dropdown menu
+     */
     public int getroomOption() { return this.roomOption.getSelectedIndex(); }
 
+    /**
+     * function that returns the hotel that was passed to this class
+     * @return a Hotel that represents the hotel that was passed upon this page's initialization
+     */
     public Hotel getHotel() {return this.hotel;}
 }

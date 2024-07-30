@@ -2,14 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * class responsible for implementing visual interface of choosing a hotel to reserve to
+ */
 public class reservePickerGUI extends manageHotelGUI{
-
-
+    /**
+     * constructor function that initializes hotel list, visibility of visual elements and page size
+     * @param list
+     */
     public reservePickerGUI(ArrayList<Hotel> list) {
         super(list);
     }
 
     @Override
+    /**
+     * initializes all visual elements
+     */
     public void initialize(){
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());

@@ -14,12 +14,31 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * class responsible for implementing a visual interface for the remove reservation functionalities
+ */
 public class removeReservationGUI extends JFrame {
+    /**
+     * exit button
+     */
     private JButton Exit;
+    /**
+     * confirm button that applies changes
+     */
     private JButton confirm;
+    /**
+     * dropdown meny that contains all reservation names
+     */
     private JComboBox<String> reservationList;
+    /**
+     * hotel that will remove selected reservation
+     */
     private Hotel hotel;
 
+    /**
+     * constructor that initializes selected hotel, visibility of selected elements and  page size
+     * @param hotel is the hotel that will remove the reservation
+     */
     public removeReservationGUI(Hotel hotel) {
         super();
         this.hotel = hotel;
@@ -32,6 +51,9 @@ public class removeReservationGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * initializes all visual elements of the page
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -72,10 +94,18 @@ public class removeReservationGUI extends JFrame {
         center.add(lblfld2, "South");
     }
 
+    /**
+     * adds an action listener to all buttons in the page
+     * @param listener is the object that will perform some action based on the button that is pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
         this.confirm.addActionListener(listener);
     }
 
+    /**
+     * returns the selected reservation of the reservation dropdown menu
+     * @return an int value that represents the index of the selected value in reservationList
+     */
     public int getReservation() { return this.reservationList.getSelectedIndex(); }
 }

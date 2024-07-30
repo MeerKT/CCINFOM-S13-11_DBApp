@@ -14,13 +14,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * class responsible for implementing visual interface for rename hotel functionalities
+ */
 public class renameHotelGUI extends JFrame {
+    /**
+     * exit button
+     */
     private JButton Exit;
+    /**
+     * confirm button
+     */
     private JButton rename;
+    /**
+     * text field where user types in new name
+     */
     private JTextField newName;
-
+    /**
+     * hotel that will be renamed
+     */
     private Hotel hotel;
 
+    /**
+     * constructor that initializes the hotel, page size, and visibility of visual elements
+     * @param hotel is the hotel that will be renamed
+     */
     public renameHotelGUI(Hotel hotel) {
         super();
         this.hotel = hotel;
@@ -33,6 +51,9 @@ public class renameHotelGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * initializes all visual elements
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -67,8 +88,16 @@ public class renameHotelGUI extends JFrame {
         center.add(BtnField);
     }
 
+    /**
+     * returns the text field where the user types in the new name for the hotel
+     * @return the text field that contains the string that represents the new name of the hotel
+     */
     public JTextField getnewName() { return this.newName; }
 
+    /**
+     * adds action listeners to all buttons in the page
+     * @param listener is the object that will perform some action based on the button that is pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
         this.rename.addActionListener(listener);

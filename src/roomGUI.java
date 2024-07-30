@@ -6,14 +6,40 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import javax.swing.*;
 
+/**
+ * class responsible for implementing visual interface for room information
+ */
 public class roomGUI extends JFrame{
+    /**
+     * exit button
+     */
     private JButton Exit;
+    /**
+     * room that will be displayed
+     */
     private Room roomOfInterest;
+    /**
+     * hotel that the room is part of
+     */
     private Hotel roomHotel;
+    /**
+     * the days in which the room is reserved
+     */
     private JList reservedDays;
+    /**
+     * list of reservations to the room
+     */
     private DefaultListModel<String> reservedList;
+    /**
+     * scroll bar
+     */
     private JScrollPane listScroll;
 
+    /**
+     * constructor that initializes the room, hotel, visibility of all visual elements and page size
+     * @param room is the room that will be displayed
+     * @param hotel is the hotel that the room is part of
+     */
     public roomGUI(Room room, Hotel hotel) {
         super();
 
@@ -30,6 +56,9 @@ public class roomGUI extends JFrame{
         this.initialize();
     }
 
+    /**
+     * initializes all visual elements
+     */
     public void initialize() {
         //INITIALIZES SOUTH PANEL
         JPanel south = new JPanel();

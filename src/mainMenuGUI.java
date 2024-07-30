@@ -13,13 +13,34 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * class that is responsible for implementing a visual interface for the main menu
+ */
 public class mainMenuGUI extends JFrame {
+    /**
+     * button that brings user to add hotel menu
+     */
     private JButton addHotel;
+    /**
+     * button that brings user to view hotel menu
+     */
     private JButton viewHotel;
+    /**
+     * button that brings user to manage hotel menu
+     */
     private JButton manageHotel;
+    /**
+     * button that brings user to the reservation menu
+     */
     private JButton simulateBooking;
+    /**
+     * button that terminates the program
+     */
     private JButton exit;
 
+    /**
+     * function that initializes page size and visibility of all visual elements
+     */
     public mainMenuGUI() {
         super("HotelGUI");
         this.setLayout(new BorderLayout());
@@ -30,6 +51,9 @@ public class mainMenuGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * function that initializes all visual elements of the page
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -67,6 +91,10 @@ public class mainMenuGUI extends JFrame {
         north.add(Title);
     }
 
+    /**
+     * function that adds action listeners to all buttons in the page
+     * @param listener is the object that performs actions based on the action listener
+     */
     public void setActionListener(ActionListener listener) {
         this.addHotel.addActionListener(listener);
         this.viewHotel.addActionListener(listener);

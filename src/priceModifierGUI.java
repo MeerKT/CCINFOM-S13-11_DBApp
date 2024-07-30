@@ -11,14 +11,35 @@ import javax.swing.JTextField;
 
 import static javax.swing.SwingConstants.LEFT;
 
+/**
+ * class responsible for implementing visual interface for mofify price per date functionalities
+ */
 public class priceModifierGUI extends JFrame {
+    /**
+     * exit button
+     */
     private JButton Exit;
+    /**
+     * confirm button
+     */
     private JButton confirm;
+    /**
+     * text field where user types in their desired modifier
+     */
     private JTextField modifierAmnt;
+    /**
+     * dropdown menu with all available dates
+     */
     private JComboBox<String> dateOption;
+    /**
+     * hotel where modifiers will be applied
+     */
     private Hotel hotel;
 
-
+    /**
+     * constructor function that initializes hotel, page size and visibility of all visual elements
+     * @param hotel is the hotel where modifiers will be applied
+     */
     public priceModifierGUI(Hotel hotel) {
         super("Modify Price per Date");
         this.setLayout(new BorderLayout());
@@ -30,6 +51,9 @@ public class priceModifierGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * function initializes all visual elements
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -79,14 +103,30 @@ public class priceModifierGUI extends JFrame {
         center.add(lblfld3 );
     }
 
+    /**
+     * function attaches action listener to the buttons in the JFame
+     * @param listener is the listener that will be told  when a certain button has been pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
         this.confirm.addActionListener(listener);
     }
 
+    /**
+     * function returns the modifierAmnt text field
+     * @return a text field that contains a string that represents the desired modifier
+     */
     public JTextField getModifierAmnt() {  return this.modifierAmnt; }
 
+    /**
+     * return the index of the selected date
+     * @return an integer value that represents the index of the selected option from the date dropdown meny
+     */
     public int getDate() { return this.dateOption.getSelectedIndex(); }
 
+    /**
+     * returns the passed hotel
+     * @return a Hotel value that represents the hotel that was originally passed to this class
+     */
     public Hotel getHotel() {return this.hotel;}
 }

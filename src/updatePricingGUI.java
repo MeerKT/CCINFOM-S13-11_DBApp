@@ -14,12 +14,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * is the class that is responsible for implementing visual interface for the update price functionalities
+ */
 public class updatePricingGUI extends JFrame {
+    /**
+     * exit button
+     */
     private JButton Exit;
+    /**
+     * the confirm button
+     */
     private JButton confirm;
+    /**
+     * text field where user types in their new price
+     */
     private JTextField newPrice;
+    /**
+     * hotel where new price will be applied
+     */
     private Hotel hotel;
 
+    /**
+     * constructor that initializes page size, hotel and visibility of all visual elements
+     * @param hotel is the hotel where new price will be applied
+     */
     public updatePricingGUI(Hotel hotel) {
         super();
 
@@ -34,6 +53,9 @@ public class updatePricingGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * initializes all visual elements of the page
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -68,10 +90,18 @@ public class updatePricingGUI extends JFrame {
         center.add(lblfld2, "South");
     }
 
+    /**
+     * function attaches action listener to the buttons in the JFame
+     * @param listener is the listener that will be told  when a certain button has been pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
         this.confirm.addActionListener(listener);
     }
 
+    /**
+     * returns the text field where the user typed in their new price
+     * @return the text field that contains the string representing the hotel's new price
+     */
     public JTextField getNewPrice() { return this.newPrice; }
 }

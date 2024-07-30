@@ -15,13 +15,35 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * class that is responsible for the visual interface of the view individual hotel info functionalities
+ */
 public class indivHotelInfoGUI extends JFrame {
+    /**
+     * an exit button
+     */
     private JButton Exit;
+    /**
+     * dropdown meny with all dates
+     */
     private JComboBox<String> dateList;
+    /**
+     * dropdown meny with all available rooms
+     */
     private JComboBox<String> roomList;
+    /**
+     * dropdown menu with all available reservations
+     */
     private JComboBox<String> reservationList;
+    /**
+     * hotel whose information is being viewed
+     */
     private Hotel hotel;
 
+    /**
+     * constructor that initializes page size, the hotel info that is needed and visibility of all visual elements
+     * @param hotel is the hotel whose information is being viewed
+     */
     public indivHotelInfoGUI(Hotel hotel) {
         super();
         this.hotel = hotel;
@@ -37,7 +59,7 @@ public class indivHotelInfoGUI extends JFrame {
     }
 
     /**
-     * function initializes the JFrame and implements all the design elements
+     * function initializes all design elements
      */
     public void initialize() {
         //INITIALIZES SOUTH PANEL
@@ -150,6 +172,11 @@ public class indivHotelInfoGUI extends JFrame {
         this.dateList.addItemListener(listener);
 
     }
+
+    /**
+     * function that attaches an item listener to the reservation list dropdown meny
+     * @param listener is the listener that will be told when a certain item has been selected
+     */
     public void setreservationListListener(ItemListener listener)
     {
         this.reservationList.addItemListener(listener);
@@ -183,10 +210,15 @@ public class indivHotelInfoGUI extends JFrame {
     public String getSelectedRoom() { return (String) this.roomList.getSelectedItem(); }
 
     /**
-     *
+     * returns the option of the reservation list
      * @return the int value of the index of the selected reservation
      */
     public int getSelectedReservation(){ return this.reservationList.getSelectedIndex(); }
+
+    /**
+     * returns the reservation list
+     * @return the specific dropdown menu that represents the reservation list
+     */
     public Object getReservation(){ return this.reservationList; }
 }
 

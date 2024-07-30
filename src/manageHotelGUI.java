@@ -12,13 +12,35 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * class responsible for implementing visual interface of the manage hotel meny
+ */
 public class manageHotelGUI extends JFrame {
+    /**
+     * list of all created hotels
+     */
     protected ArrayList<Hotel> list;
+    /**
+     * exit button
+     */
     protected JButton Exit;
+    /**
+     * Jlist of all created hotels
+     */
     protected JList<String> nameList;
+    /**
+     * default List that contains all hotel names
+     */
     protected DefaultListModel<String> hotelList;
+    /**
+     * scroll bar for visual list
+     */
     protected JScrollPane listScroll;
 
+    /**
+     * constructor responsible for initializing page size, visibility of visual elements anc list of hotels
+     * @param list is the list of hotels that will be displayed
+     */
     public manageHotelGUI(ArrayList<Hotel> list) {
         super("Manage Hotel Menu");
         this.setLayout(new BorderLayout());
@@ -30,6 +52,9 @@ public class manageHotelGUI extends JFrame {
         this.initialize();
     }
 
+    /**
+     * initializes all visual elements of the page
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -73,13 +98,25 @@ public class manageHotelGUI extends JFrame {
         center.add(container);
     }
 
+    /**
+     * adds an action listener to all buttons in the page
+     * @param listener is the object that will perform an action based on the button pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
     }
 
+    /**
+     * adds a selection listener to the list in this page
+     * @param listener is the object that will perform an action based on the list item that is pressed
+     */
     public void setSelectionListener(ListSelectionListener listener) {
         this.nameList.addListSelectionListener(listener);
     }
 
+    /**
+     * returns the value of the selected list item
+     * @return a string that represents the value of the selected hotel name
+     */
     public String getSelectedValue() { return (String) this.nameList.getSelectedValue(); }
 }

@@ -15,12 +15,30 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 
+/**
+ * visual interface for the addHotel functionalities
+ */
 public class addHotelGUI extends JFrame {
+    /**
+     * the exit button
+     */
     private JButton exitAH;
+    /**
+     * the confirm button
+     */
     private JButton confirmAmount;
-    JTextField newName;
-    JTextField roomAmnt;
+    /**
+     * textfield where user types out the new name
+     */
+    private JTextField newName;
+    /**
+     * textfield where user types out the amount of rooms in the new hotel
+     */
+    private JTextField roomAmnt;
 
+    /**
+     * constructor that sets page size and visibility of visual elements
+     */
     public addHotelGUI() {
         super("addHotel");
         this.setLayout(new BorderLayout());
@@ -31,6 +49,9 @@ public class addHotelGUI extends JFrame {
         this.setDefaultCloseOperation(3);
     }
 
+    /**
+     * initialize function initializes all the visual elements of the addHotel page
+     */
     public void initialize() {
         JPanel south = new JPanel();
         south.setLayout(new FlowLayout());
@@ -72,13 +93,30 @@ public class addHotelGUI extends JFrame {
         south.add(this.exitAH);
     }
 
+    /**
+     * function that adds an action listener to all buttons in the page
+     * @param listener is the object that does some action whenever a button is pressed
+     */
     public void setActionListener(ActionListener listener) {
         this.exitAH.addActionListener(listener);
         this.confirmAmount.addActionListener(listener);
     }
 
-    public void setDocumentListener(DocumentListener listener) {
-        this.newName.getDocument().addDocumentListener(listener);
-        this.roomAmnt.getDocument().addDocumentListener(listener);
+
+    /**
+     * function that returns the text field that contains the new name
+     * @return a JTextfield that contains whatever string value was typed into the newName textfield
+     */
+    public JTextField getNewName() {
+        return this.newName;
+    }
+
+    /**
+     * function that returns the text field that contains the amount of rooms
+     * @return a JTextfield that contains whatever string value was typed into the roomAmnt textfield
+     */
+    public JTextField getRoomAmnt()
+    {
+        return this.roomAmnt;
     }
 }

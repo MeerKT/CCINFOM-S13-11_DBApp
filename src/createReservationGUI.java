@@ -2,17 +2,48 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * class responsible for the visual interface of the individual reservation creation functionalities
+ */
 public class createReservationGUI extends JFrame {
 
+    /**
+     * the exit button
+     */
     private JButton Exit;
+    /**
+     * confirm button
+     */
     private JButton confirmReservation;
+    /**
+     * dropdown menu where user chooses check in date
+     */
     private JComboBox<String> checkInDate;
+    /**
+     * dropdown menu where user chooses check out date
+     */
     private JComboBox<String> checkOutDate;
+    /**
+     * dropdown meny where user chooses their room
+     */
     private JComboBox<String> roomList;
+    /**
+     * hotel where the reservation is added to
+     */
     private Hotel hotel;
+    /**
+     * text field where the user can type their name
+     */
     private JTextField guestName;
+    /**
+     * text field where the user can type in a discount code
+     */
     private JTextField discountCode;
 
+    /**
+     * initializes page size and visibility of all visual elements
+     * @param hotel is the hotel where the reservation is added  to
+     */
     public createReservationGUI(Hotel hotel) {
         super();
         this.hotel = hotel;
@@ -28,7 +59,7 @@ public class createReservationGUI extends JFrame {
 
 
     /**
-     * function initializes the JFrame and implements all the design elements
+     * function that creates all the design elements of the page
      */
     public void initialize() {
         //INITIALIZES SOUTH PANEL
@@ -140,6 +171,10 @@ public class createReservationGUI extends JFrame {
         center.add(container6);
     }
 
+    /**
+     * function attaches an action listener to all buttons
+     * @param listener is the object that will perform actions based on the listeners that are attached to the buttons
+     */
     public void setActionListener(ActionListener listener) {
         this.Exit.addActionListener(listener);
         this.confirmReservation.addActionListener(listener);
@@ -153,6 +188,10 @@ public class createReservationGUI extends JFrame {
         return this.guestName;
     }
 
+    /**
+     * returns the index of the room option dropdown meny
+     * @return an int value that represents the index of the selected option in the room list dropdown meny
+     */
     public int getRoom() {
         return this.roomList.getSelectedIndex();
     }

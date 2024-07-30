@@ -14,31 +14,100 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+/**
+ * class that is responsible for listening to the actions performed by the user in the GUI and doing some other action that corresponds to it
+ */
 public class Controller implements ActionListener, DocumentListener, ListSelectionListener, ItemListener {
+    /**
+     * main menu page
+     */
     private mainMenuGUI gui;
+    /**
+     * addHotel page
+     */
     private addHotelGUI addGUI;
+    /**
+     * view hotel page where user selects a specific hotel
+     */
     private viewHotelGUI viewGUI;
+    /**
+     * manage hotel page where the user selects a specific hotel
+     */
     private manageHotelGUI manageGUI;
+    /**
+     * view hotel page where the user views the information of a specific hotel
+     */
     private indivHotelInfoGUI hotelInfoGUI;
+    /**
+     * manage hotel page where the user selects options to modify a specific hotel
+     */
     private indivHotelManagerGUI hotelManageGUI;
+    /**
+     * manage hotel page where the user changes the name of a specific hotel
+     */
     private renameHotelGUI renameGUI;
+    /**
+     * manage hotel page where the user changes the base price of a specific hotel
+     */
     private updatePricingGUI updatePriceGUI;
+    /**
+     * manage hotel page where the user adds rooms to a specific hotel
+     */
     private addRoomGUI addRoomGUI;
+    /**
+     * manage hotel page where the user removes reservations from a specific hotel
+     */
     private removeReservationGUI removeReservesGUI;
+    /**
+     * view hotel page where the user is able to view a specific room from a specific hotel
+     */
     private roomGUI indivRoomGUI;
+    /**
+     * manage hotel page where the user is able to remove a room from a specific hotel
+     */
     private removeRoomGUI removeRoomGUI;
+    /**
+     * reservation page where the user selects which hotel they want to make a reservation for
+     */
     private reservePickerGUI reservationGUI;
+    /**
+     * JFrame that represents which page the user is currently on
+     */
     private JFrame currentScreen;
+    /**
+     * reservation page where the user inputs all information and confirms their reservation to a hotel
+     */
     private createReservationGUI indivReservation;
+    /**
+     * manage hotel page where the user is able to place price modifiers on a specific date
+     */
     private  priceModifierGUI newPriceModifier;
+    /**
+     * view hotel page where the user is able to view information about a specific reservation
+     */
     private reservationGUI reservationInfo;
-
+    /**
+     * Hotel value that is used whenever the program searches the manager for a specific hotel
+     */
     private Hotel hotelSearch;
+    /**
+     * Room value that is used whenever the program searches a hotel for a specific room
+     */
     private Room roomSearch;
+    /**
+     * integer value that represents the index of a hotel in the manager
+     */
     private int hotelIndex;
-
+    /**
+     * the manager that contains all the hotels the user has created
+     */
     private HotelManager manager;
 
+    /**
+     * initializes the hotelManager and the main menu screen
+     * @param gui is the main menu screen
+     * @param manager is the manager that contains all the hotels
+     */
     public Controller(mainMenuGUI gui, HotelManager manager) {
         this.manager = manager;
         this.gui = gui;
@@ -64,7 +133,6 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
         if (e.getActionCommand().equals("1 - ADD HOTEL")) {
             this.addGUI = new addHotelGUI();
             this.addGUI.setActionListener(this);
-            this.addGUI.setDocumentListener(this);
 
             this.currentScreen = this.addGUI;
             this.gui.dispose();
@@ -295,20 +363,20 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
 
                    //checks the hotel list if the name is unique
                    for (int i = 0; i < this.manager.getHotelList().size(); i++) {
-                       if (this.addGUI.newName.getText().equals(this.manager.getHotelList().get(i).getName())) {
+                       if (this.addGUI.getNewName().getText().equals(this.manager.getHotelList().get(i).getName())) {
                            isValid = false;
                        }
                    }
 
                    // checks if the amount of rooms is below 50 and above 1
-                   if(Integer.parseInt(this.addGUI.roomAmnt.getText()) < 1 || Integer.parseInt(this.addGUI.roomAmnt.getText()) > 50){
+                   if(Integer.parseInt(this.addGUI.getRoomAmnt().getText()) < 1 || Integer.parseInt(this.addGUI.getRoomAmnt().getText()) > 50){
                        isValid = false;
                    }
 
                    //adds the hotel to the list
                    if(isValid)
                    {
-                       this.manager.createHotel(this.addGUI.newName.getText() ,Integer.parseInt(this.addGUI.roomAmnt.getText()));
+                       this.manager.createHotel(this.addGUI.getNewName().getText() ,Integer.parseInt(this.addGUI.getRoomAmnt().getText()));
                        JOptionPane.showMessageDialog(null, "Hotel Successfully Created!");
 
                        this.initializeGUI();
