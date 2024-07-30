@@ -2,13 +2,37 @@
  * Responsible for handling all the data needed for a customer to reserve a hotel room
  */
 public class Reservation {
+    /**
+     * String that contains the name of the guest for the reservation
+     */
     private String guestName;
+    /**
+     * Integer that indicates what day the guest will be checking in
+     */
     private int checkIn;
+    /**
+     * Integer that indicates what day the guest will be checking out
+     */
     private int checkOut;
+    /**
+     * Room value that indicates which room the guest has chosen to stay in
+     */
     private Room chosenRoom;
+    /**
+     * String value containing the inputted discount code, can contain an invalid code, but it will not do anything
+     */
     private String discountCode;
+    /**
+     * Floating point value indicating the price per night for the reservation
+     */
     private float pricePerNight;
+    /**
+     * Floating point value indicating the total price of the reservation
+     */
     private float totalPrice;
+    /**
+     * boolean value indicating whether the room has successfully been discounted
+     */
     private boolean isDiscounted;
 
     /**

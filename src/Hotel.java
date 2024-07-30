@@ -5,10 +5,25 @@ import java.util.Scanner;
  * Responsible for representing a single hotel.
  */
 public class Hotel{
+    /**
+     * The name of the hotel
+     */
     private String name;
+    /**
+     * ArrayList containing the list of rooms in the hotel
+     */
     private ArrayList<Room> roomList;
+    /**
+     * ArrayList containing the list of reservations in the hotel
+     */
     private ArrayList<Reservation> reservationList;
+    /**
+     * floating point value to indicate the base price of a standard room in the hotel
+     */
     private float basePrice;
+    /**
+     * floating point array that indicates the modifier to be applied to a specific date
+     */
     private float[] datePriceModifier;
 
     /**
@@ -168,8 +183,11 @@ public class Hotel{
      * Shows the user the list of available rooms and asks the user for all necessary
      * information to create a booking (the room name and/or number, guest name, check-in,
      * and check-out day).
-     * <p>
-     * Method ends by creating a new instance of Reservation
+     * @param roomNo - integer that represents a room number (does not follow naming convention, so B01 would be 11)
+     * @param checkIn - the day the guest will check-in to their hotel room
+     * @param checkOut - the day the guest will check-out
+     * @param guestName - name of the guest reserving a hotel room
+     * @param discountCode - string containing the possibly valid discount code
      */
     public void simulateBooking( int roomNo,int checkIn, int checkOut, String guestName, String discountCode ){
 
@@ -232,11 +250,9 @@ public class Hotel{
     }
 
     /**
-     * Asks user how many rooms they would like to add to the hotel and checks
-     * if the inputted number is valid or not.
-     * <p>
-     * If valid, the method will call the generateRooms method to create the new rooms.
-     * If invalid, the method will loop until the user gives a valid input.
+     * Adds rooms to the hotel given an option and number
+     * @param option - option for what kind of room to generate (Standard, Deluxe, or Executive)
+     * @param num - number of rooms to be generated
      */
     public void addRoom(int option, int num) {
         generateRooms(option, num, getNoOfRooms()+1);
