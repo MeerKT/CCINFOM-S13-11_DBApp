@@ -557,7 +557,7 @@ public class Controller implements ActionListener, DocumentListener, ListSelecti
                     JOptionPane.showMessageDialog(null, "Please input a valid name!");
                 }
 
-                else if(this.indivReservation.getCheckInDate() == 0 || this.indivReservation.getCheckOutDate() == 0 || (this.indivReservation.getCheckOutDate()) < this.indivReservation.getCheckInDate())
+                else if(this.indivReservation.getCheckInDate() == 0 || this.indivReservation.getCheckOutDate() == 0 || (this.indivReservation.getCheckOutDate()) <= this.indivReservation.getCheckInDate())
                 {
                     JOptionPane.showMessageDialog(null, "Please input valid dates!");
                 }
