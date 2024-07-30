@@ -3,8 +3,17 @@ import java.util.Arrays;
  * Responsible for handling all the data corresponding to a hotel room
  */
 public class Room {
+    /**
+     * String containing the name of the room (A01, A02, ..., A10, B01, ...)
+     */
     protected String name;
+    /**
+     * Floating point value indicating the price of the room
+     */
     protected float price;
+    /**
+     * Boolean array containing whether a room is reserved or not on a specific day
+     */
     protected Boolean[] isReserved;
 
     /**
@@ -13,6 +22,7 @@ public class Room {
      * the number of days in a month). Also all elements of the array are initialized to false as
      * no rooms have been reserved at the time of creating them.
      * @param name - the unique identifier for a room following a specific naming convention
+     * @param price - the price of the room
      */
     public Room(String name, float price) {
         this.name = name;

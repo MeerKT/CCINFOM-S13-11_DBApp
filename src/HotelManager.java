@@ -8,6 +8,7 @@ import java.util.Scanner;
  * <li>View Hotel</li>
  * <li>Manage Hotel</li>
  * <li>Simulate Booking</li>
+ * </ul>
  */
 public class HotelManager {
     private ArrayList<Hotel> hotelList;
@@ -430,5 +431,9 @@ public class HotelManager {
         return this.hotelList.size();
     }
 
+    /**
+     * Getter function for the list of hotels
+     * @return this.hotelList
+     */
     public ArrayList<Hotel> getHotelList() { return this.hotelList; }
 }
