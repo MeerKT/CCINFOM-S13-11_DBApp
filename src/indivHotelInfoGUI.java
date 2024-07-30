@@ -193,7 +193,7 @@ public class indivHotelInfoGUI extends JFrame {
 
     /**
      * function gets the date that was chosen
-     * @returns the index of the selected date in the combobox dateList
+     * @return the index of the selected date in the combobox dateList
      */
     public int getSelectedDate() { return this.dateList.getSelectedIndex(); }
 
