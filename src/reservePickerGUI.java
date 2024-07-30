@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class reservePickerGUI extends manageHotelGUI{
     /**
      * constructor function that initializes hotel list, visibility of visual elements and page size
-     * @param list
+     * @param list - ArrayList of hotels
      */
     public reservePickerGUI(ArrayList<Hotel> list) {
         super(list);

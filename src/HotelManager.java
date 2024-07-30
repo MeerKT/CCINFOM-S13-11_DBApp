@@ -11,6 +11,9 @@ import java.util.Scanner;
  * </ul>
  */
 public class HotelManager {
+    /**
+     * ArrayList containing the full list of hotels
+     */
     private ArrayList<Hotel> hotelList;
 
     /**
@@ -23,6 +26,8 @@ public class HotelManager {
     /**
      * Asks the user to input the information for creating a hotel,
      * which are its name and the number of rooms present.
+     * @param name - name of the Hotel to be made
+     * @param noOfRooms - number of rooms in the hotel to be made
      */
     public void createHotel(String name, int noOfRooms) {
         //initializes a hotel with its name
