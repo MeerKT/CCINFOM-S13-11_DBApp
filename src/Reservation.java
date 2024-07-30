@@ -159,14 +159,14 @@ public class Reservation {
     /**
      * returns true if the discount code exists and false if it does not
      * @param discountCode - the discount code to be checked
-     * @return
+     * @return 1 if a discountCode exists and 0 if not
      */
     public boolean checkDiscountCode(String discountCode){
         return discountCode.equals(DiscountCodes.DISCOUNT_FLAT) || discountCode.equals(DiscountCodes.DISCOUNT_GET1FREE) || discountCode.equals(DiscountCodes.DISCOUNT_PAYDAY);
     }
 
     /**
-     *
+     * Getter function for the boolean value isDiscounted
      * @return the boolean value that represents whether the reservation is discounted
      */
     public boolean getDiscount() { return this.isDiscounted; }
