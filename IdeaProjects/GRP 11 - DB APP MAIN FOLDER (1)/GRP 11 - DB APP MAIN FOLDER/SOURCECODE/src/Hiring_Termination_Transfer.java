@@ -5,6 +5,7 @@
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -61,20 +62,52 @@ public class Hiring_Termination_Transfer {
 
             pstmt.executeUpdate();
 
+            //updates event table
             int event_ID = 0;
             pstmt = conn.prepareStatement("SELECT MAX(event_ID) + 1 AS newID FROM  hiring_termination");
             rst = pstmt.executeQuery();
             while(rst.next()){
                 event_ID = rst.getInt("newID");
             }
-
             pstmt = conn.prepareStatement("INSERT INTO hiring_termination (event_ID,employee_ID,event_type,event_date,department_to) VALUE(?,?,?,?,?)");
             pstmt.setInt(1, event_ID);
             pstmt.setInt(2, employee_ID);
             pstmt.setString(3, "Hired");
             pstmt.setDate(4, sqlDate);
             pstmt.setString(5, newDepartment);
+            pstmt.executeUpdate();
 
+            //updates employee_documentation table
+            int docuID = 0;
+            pstmt = conn.prepareStatement("SELECT MAX(document_ID) + 1 AS newID FROM  employee_documents");
+            rst = pstmt.executeQuery();
+            while(rst.next()){
+                docuID = rst.getInt("newID");
+            }
+
+            pstmt = conn.prepareStatement("INSERT INTO employee_documents(employee_ID,document_ID,document_type,document_status,submission_date,expiry_date) VALUE(?,?,?,?,?,?)");
+            pstmt.setInt(1, employee_ID);
+            pstmt.setInt(2, docuID);
+            pstmt.setString(3, "Government ID");
+            pstmt.setString(4, "Active");
+            pstmt.setDate(5, sqlDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(sqlDate);
+            calendar.add(Calendar.YEAR,5);
+            java.sql.Date futureDate = new Date(calendar.getTimeInMillis());
+            pstmt.setDate(6,futureDate);
+            pstmt.executeUpdate();
+
+            pstmt = conn.prepareStatement("INSERT INTO employee_documents(employee_ID,document_ID,document_type,document_status,submission_date,expiry_date) VALUE(?,?,?,?,?,?)");
+            pstmt.setInt(1, employee_ID);
+            pstmt.setInt(2, docuID+1);
+            pstmt.setString(3, "Employee Contract");
+            pstmt.setString(4, "Active");
+            pstmt.setDate(5, sqlDate);
+            calendar.setTime(sqlDate);
+            calendar.add(Calendar.YEAR,2);
+            futureDate = new Date(calendar.getTimeInMillis());
+            pstmt.setDate(6,futureDate);
             pstmt.executeUpdate();
 
             pstmt.close();

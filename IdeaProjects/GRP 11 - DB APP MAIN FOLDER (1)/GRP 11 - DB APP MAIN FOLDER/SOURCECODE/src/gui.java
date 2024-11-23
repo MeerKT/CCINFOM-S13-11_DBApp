@@ -13,6 +13,7 @@ public class gui {
     public static performance_report pr = new performance_report();
     public static salary_report sr = new salary_report();
     public static employeeCountReport er = new employeeCountReport();
+    public static project_management pm = new project_management();
 
     // Main panel with CardLayout
     public JPanel mainPanel = new JPanel(new CardLayout());
@@ -26,6 +27,7 @@ public class gui {
     public JPanel hireEmployeePanel = createHireEmployeePanel(mainPanel);
     public JPanel changeStatusPanel = createChangeStatusPanel(mainPanel);
     public JPanel performancePanel = createPerformancePanel(mainPanel);
+    public JPanel projectManagementPanel = createProjectManagementPanel(mainPanel);
 
     //reports
     public JPanel salaryReportPanel = createSalaryReportPanel(mainPanel);
@@ -49,6 +51,7 @@ public class gui {
         mainPanel.add(hireEmployeePanel, "HireEmployee");
         mainPanel.add(changeStatusPanel, "ChangeStatus");
         mainPanel.add(performancePanel, "Performance");
+        mainPanel.add(projectManagementPanel, "ProjectManagement");
 
         //reports
         mainPanel.add(salaryReportPanel, "SalaryReport");
@@ -77,19 +80,21 @@ public class gui {
     private static JPanel createMainMenu(JPanel mainPanel) {
         JPanel panel = new JPanel(new GridLayout(1, 2));
 
-        JPanel transactionsPanel = new JPanel(new GridLayout(5, 1, 5, 5));
-        JPanel reportsPanel = new JPanel(new GridLayout(5, 1, 5, 5));
+        JPanel transactionsPanel = new JPanel(new GridLayout(6, 2, 5, 5));
+        JPanel reportsPanel = new JPanel(new GridLayout(6, 2, 5, 5));
 
         transactionsPanel.add(new JLabel("<html><h2><center>Employee Management</center></h2></html>", JLabel.CENTER));
         JButton updateStatusButton = new JButton("Update Employee Status");
         JButton changeDisbursementButton = new JButton("Manage Employee Salary");
         JButton performanceButton = new JButton("Leave a review for an employee");
         JButton hireTerminateTransferButton = new JButton("Hire, Terminate, or Transfer Employee");
+        JButton projectManagementButton = new JButton("Project Management");
 
         transactionsPanel.add(updateStatusButton);
         transactionsPanel.add(changeDisbursementButton);
         transactionsPanel.add(performanceButton);
         transactionsPanel.add(hireTerminateTransferButton);
+        transactionsPanel.add(projectManagementButton);
 
         reportsPanel.add(new JLabel("<html><h2><center>Employee Reports</center></h2></html>", JLabel.CENTER));
         JButton attendanceReportButton = new JButton("Generate Employee Count Report");
@@ -110,14 +115,15 @@ public class gui {
         changeDisbursementButton.addActionListener(e -> navigateToPanel(mainPanel, "ChangeDisbursement"));
         hireTerminateTransferButton.addActionListener(e -> navigateToPanel(mainPanel, "HireTerminateTransfer"));
         performanceButton.addActionListener(e -> navigateToPanel(mainPanel, "Performance"));
+        projectManagementButton.addActionListener(e -> navigateToPanel(mainPanel, "ProjectManagement"));
 
         //reports
         salaryReportButton.addActionListener(e -> navigateToPanel(mainPanel, "SalaryReport"));
         performanceReportButton.addActionListener(e -> navigateToPanel(mainPanel, "PerformanceReport"));
         attendanceReportButton.addActionListener(e -> {
-            er.generate();
-            er.printReport();
-        }
+                    er.generate();
+                    er.printReport();
+                }
 
         );
         hiresAttritionReportButton.addActionListener(e -> navigateToPanel(mainPanel, "AttendanceReport"));
@@ -389,7 +395,7 @@ public class gui {
                 JOptionPane.showMessageDialog(
                         panel,
                         "Employee Termination Failed", "Employee Error",
-                JOptionPane.INFORMATION_MESSAGE
+                        JOptionPane.INFORMATION_MESSAGE
                 );
             }
         });
@@ -416,26 +422,26 @@ public class gui {
         panel.add(transferButton);
 
         transferButton.addActionListener(e -> {
-                    // Retrieve input values
-                    int ID = (int) employeeDropdown.getSelectedItem();
-                    String departmentName = (String) departmentDropDown.getSelectedItem();
-                    // Perform actions with the data (e.g., save to database, display message, etc.)
+            // Retrieve input values
+            int ID = (int) employeeDropdown.getSelectedItem();
+            String departmentName = (String) departmentDropDown.getSelectedItem();
+            // Perform actions with the data (e.g., save to database, display message, etc.)
 
-                    if (hireTerminateTransfer.transfer_employee(ID, departmentName) == 1) {
-                        JOptionPane.showMessageDialog(
-                                panel,
-                                "Employee Transferred!",
-                                "Success",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                panel,
-                                "Employee Transfer Failed", "Employee Error",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-                    }
-                });
+            if (hireTerminateTransfer.transfer_employee(ID, departmentName) == 1) {
+                JOptionPane.showMessageDialog(
+                        panel,
+                        "Employee Transferred!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            } else {
+                JOptionPane.showMessageDialog(
+                        panel,
+                        "Employee Transfer Failed", "Employee Error",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
 
         panel.add(createBackButton(mainPanel, "HireTerminateTransfer"));
         return panel;
@@ -494,46 +500,46 @@ public class gui {
             // Retrieve input values
 
             // Perform actions with the data (e.g., save to database, display message, etc.)
-                try {
+            try {
 
-                    String firstName = firstNameField.getText();
-                    String lastName = lastNameField.getText();
-                    String gender = (String) genderDropdown.getSelectedItem();
-                    String departmentName = (String) departmentDropDown.getSelectedItem();
-                    String positionType = positionTypeField.getText();
-                    int yearsOfExperience = Integer.parseInt(yearsOfExperienceField.getText());
-                    String education = educationField.getText();
+                String firstName = firstNameField.getText();
+                String lastName = lastNameField.getText();
+                String gender = (String) genderDropdown.getSelectedItem();
+                String departmentName = (String) departmentDropDown.getSelectedItem();
+                String positionType = positionTypeField.getText();
+                int yearsOfExperience = Integer.parseInt(yearsOfExperienceField.getText());
+                String education = educationField.getText();
 
-                    if(firstName.isEmpty() || lastName.isEmpty() || departmentName.isEmpty() || positionType.isEmpty() || education.isEmpty()) {
-                        JOptionPane.showMessageDialog(
-                                panel,
-                                "Employee Hire Failed", "Employee Error",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-                    }
-                    else if(hireTerminateTransfer.hire_employee(firstName, lastName, gender, departmentName, positionType, yearsOfExperience, education) == 1)
-                    {
-                        JOptionPane.showMessageDialog(
-                                panel,
-                                "Employee Hired:\n" +
-                                        "Name: " + firstName + " " + lastName + "\n" +
-                                        "Gender: " + gender + "\n" +
-                                        "Department: " + departmentName + "\n" +
-                                        "Position: " + positionType + "\n" +
-                                        "Experience: " + yearsOfExperience + " years\n" +
-                                        "Education: " + education,
-                                "Success",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-
-                    }
-                } catch(NumberFormatException error) {
+                if(firstName.isEmpty() || lastName.isEmpty() || departmentName.isEmpty() || positionType.isEmpty() || education.isEmpty()) {
                     JOptionPane.showMessageDialog(
                             panel,
                             "Employee Hire Failed", "Employee Error",
                             JOptionPane.INFORMATION_MESSAGE
                     );
                 }
+                else if(hireTerminateTransfer.hire_employee(firstName, lastName, gender, departmentName, positionType, yearsOfExperience, education) == 1)
+                {
+                    JOptionPane.showMessageDialog(
+                            panel,
+                            "Employee Hired:\n" +
+                                    "Name: " + firstName + " " + lastName + "\n" +
+                                    "Gender: " + gender + "\n" +
+                                    "Department: " + departmentName + "\n" +
+                                    "Position: " + positionType + "\n" +
+                                    "Experience: " + yearsOfExperience + " years\n" +
+                                    "Education: " + education,
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+
+                }
+            } catch(NumberFormatException error) {
+                JOptionPane.showMessageDialog(
+                        panel,
+                        "Employee Hire Failed", "Employee Error",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
             // Clear fields after hiring
             firstNameField.setText("");
             lastNameField.setText("");
@@ -706,5 +712,104 @@ public class gui {
         return panel;
     }
 
+    public JPanel createProjectManagementPanel(JPanel mainPanel) {
+        JPanel panel = new JPanel(new GridLayout(14, 2, 5, 5));
+        project_management project = new project_management();
+        panel.add(new JLabel("<html><h2><center>Project Management</center></h2></html>", JLabel.CENTER));
+        panel.add(new JLabel("Input Projects here ", JLabel.CENTER));
 
+        JComboBox<Integer> employeeDropdown = new JComboBox<>(employeeList);
+        panel.add(new JLabel("Employee ID: "));
+        panel.add(employeeDropdown);
+
+        // Project Type Dropdown
+        panel.add(new JLabel("Project Type: "));
+        JComboBox<String> pType = new JComboBox<>(new String[]{"Software Developemnt","Recruitment Process Improvement","Cost Reduction Initiative","Public Relations","Process Optimization"});
+        panel.add(pType);
+
+        // Date Fields
+        panel.add(new JLabel("Start Date (YYYY-MM-DD): "));
+        JTextField sDate = new JTextField();
+        panel.add(sDate);
+
+        panel.add(new JLabel("End Date (YYYY-MM-DD): "));
+        JTextField eDate = new JTextField();
+        panel.add(eDate);
+
+        panel.add(new JLabel("Project Deadline (YYYY-MM-DD): "));
+        JTextField pDL = new JTextField();
+        panel.add(pDL);
+
+        // Project Description
+        panel.add(new JLabel("Project Description: "));
+        JTextField pDesc = new JTextField();
+        panel.add(pDesc);
+
+        // Project Status Dropdown
+        panel.add(new JLabel("Project Status: "));
+        JComboBox<String> pStatus = new JComboBox<>(new String[]{"Pending", "Completed", "Overdue"});
+        panel.add(pStatus);
+
+        // Client Name
+        panel.add(new JLabel("Client Name: "));
+        JTextField client = new JTextField();
+        panel.add(client);
+
+        JButton submitButton = new JButton("Submit New Project");
+        JButton updateButton = new JButton("Update Old Project");
+        panel.add(submitButton);
+        panel.add(updateButton);
+
+        submitButton.addActionListener(e -> {
+            try {
+                int eID = (int) employeeDropdown.getSelectedItem();
+                String type = (String) pType.getSelectedItem();
+                String startDate = sDate.getText();
+                String endDate = eDate.getText();
+                String deadline = pDL.getText();
+                String description = pDesc.getText();
+                String status = (String) pStatus.getSelectedItem();
+                String clientName = client.getText();
+
+                // Add project logic
+                if (project.addNewProject(eID, type, startDate, endDate, deadline, description, status, clientName)) {
+                    JOptionPane.showMessageDialog(panel, "Project Submitted Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(panel, "Failed to Submit Project", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(panel, "Invalid Input: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // Update Old Project Button Logic
+        updateButton.addActionListener(e -> {
+            String inputID = JOptionPane.showInputDialog(panel, "Enter Project ID to Update:");
+            if (inputID != null && !inputID.isEmpty()) {
+                int projectID = Integer.parseInt(inputID);
+                if (project.isValidProject(projectID)) {
+                    int eID = (int) employeeDropdown.getSelectedItem();
+                    String type = (String) pType.getSelectedItem();
+                    String startDate = sDate.getText();
+                    String endDate = eDate.getText();
+                    String deadline = pDL.getText();
+                    String description = pDesc.getText();
+                    String status = (String) pStatus.getSelectedItem();
+                    String clientName = client.getText();
+
+                    // Update project logic
+                    if (project.updateProject(projectID, eID, type, startDate, endDate, deadline, description, status, clientName)) {
+                        JOptionPane.showMessageDialog(panel, "Project Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(panel, "Failed to Update Project", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(panel, "Invalid Project ID", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        panel.add(createBackButton(mainPanel, "MainMenu"));
+        return panel;
+    }
 }
