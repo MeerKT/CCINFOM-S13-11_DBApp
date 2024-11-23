@@ -49,7 +49,6 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="dbTest" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
