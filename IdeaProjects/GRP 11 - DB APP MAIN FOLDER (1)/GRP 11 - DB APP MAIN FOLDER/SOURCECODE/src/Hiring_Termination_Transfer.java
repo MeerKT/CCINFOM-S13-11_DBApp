@@ -146,13 +146,11 @@ public class Hiring_Termination_Transfer {
         try {
             Connection  conn;
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/employeedb", "root", "WillKill4QP!");
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE employee_records SET termination_date = ?, department_name = ?, position_type = ?, performance_reviews = ? WHERE employee_ID = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE employee_records SET termination_date = ?, performance_reviews = ? WHERE employee_ID = ?");
             java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());
             pstmt.setDate(1, sqlDate);
-            pstmt.setString(2,"TERMINATED");
-            pstmt.setString(3,"TERMINATED");
-            pstmt.setNull(4, java.sql.Types.VARCHAR);
-            pstmt.setInt(5, employee_ID);
+            pstmt.setNull(2, java.sql.Types.VARCHAR);
+            pstmt.setInt(3, employee_ID);
 
             pstmt.executeUpdate();
 

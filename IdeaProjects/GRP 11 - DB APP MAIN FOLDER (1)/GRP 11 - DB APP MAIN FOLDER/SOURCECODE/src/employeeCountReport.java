@@ -26,6 +26,7 @@ public class employeeCountReport {
 
             String query ="select department_name as Department, count(employee_ID) as EmployeeCount\n" +
                     "from employee_records\n" +
+                    "where termination_date IS NULL\n" +
                     "group by department_name\n" +
                     "Order by EmployeeCount Desc";
 

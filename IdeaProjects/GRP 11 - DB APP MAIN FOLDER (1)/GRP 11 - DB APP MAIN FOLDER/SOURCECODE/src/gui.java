@@ -3,6 +3,10 @@ import java.awt.*;
 
 public class gui {
 
+    //Jcombobox models
+    public DefaultComboBoxModel employeeList = new DefaultComboBoxModel();
+
+
     public static Hiring_Termination_Transfer hireTerminateTransfer = new Hiring_Termination_Transfer();
     public static employee_records records = new employee_records();
     public static hire_attrition_report har = new hire_attrition_report();
@@ -28,7 +32,10 @@ public class gui {
     public JPanel performanceReportPanel = createPerformanceReportPanel(mainPanel);
     public JPanel hiresAttritionReport = createHiresAttritionReportPanel(mainPanel);
 
+
+
     public gui () {
+
         JFrame frame = new JFrame("Employee Database Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
@@ -118,19 +125,20 @@ public class gui {
         return panel;
     }
 
-    public static JPanel createPerformancePanel(JPanel mainPanel) {
+    public JPanel createPerformancePanel(JPanel mainPanel) {
         JPanel panel = new JPanel(new GridLayout(10, 1, 5, 5));
         Performance_Review review = new Performance_Review();
         panel.add(new JLabel("<html><h2><center>Transfer Employees Here</center></h2></html>", JLabel.CENTER));
         panel.add(new JLabel("Choose an employee: ", JLabel.CENTER));
 
-        JComboBox<Integer> employeeDropdown = new JComboBox<>();
         records.getEmployees();
         for(int i = 0; i < records.employee_IDList.size();i++) {
             if(records.termination_dateList.get(i) == null) {
-                employeeDropdown.addItem(records.employee_IDList.get(i));
+                employeeList.addElement(records.employee_IDList.get(i));
             }
         }
+
+        JComboBox<Integer> employeeDropdown = new JComboBox<>(employeeList);
         panel.add(employeeDropdown);
 
         panel.add(new JLabel("Leave a Score: "));
@@ -326,7 +334,7 @@ public class gui {
 
 
     // Hire/Terminate/Transfer Panel
-    public static JPanel createHireTerminateTransferPanel(JPanel mainPanel) {
+    public JPanel createHireTerminateTransferPanel(JPanel mainPanel) {
         JPanel panel = new JPanel(new GridLayout(4, 1, 5, 5));
 
         panel.add(new JLabel("<html><h2><center>Select an Action</center></h2></html>", JLabel.CENTER));
@@ -348,19 +356,14 @@ public class gui {
     }
 
     // Terminate Employee Panel
-    public static JPanel createTerminatePanel(JPanel mainPanel) {
+    public JPanel createTerminatePanel(JPanel mainPanel) {
         JPanel panel = new JPanel(new GridLayout(6, 1, 5, 5));
 
         panel.add(new JLabel("<html><h2><center>Terminate Employees Here</center></h2></html>", JLabel.CENTER));
         panel.add(new JLabel("Choose an employee: ", JLabel.CENTER));
 
-        JComboBox<Integer> employeeDropdown = new JComboBox<>();
-        records.getEmployees();
-            for(int i = 0; i < records.employee_IDList.size();i++) {
-                if(records.termination_dateList.get(i) == null) {
-                    employeeDropdown.addItem(records.employee_IDList.get(i));
-                }
-            }
+
+        JComboBox<Integer> employeeDropdown = new JComboBox<>(employeeList);
         panel.add(employeeDropdown);
 
         JButton fireButton = new JButton("Fire Employee");
@@ -379,7 +382,7 @@ public class gui {
                         "Success",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-                employeeDropdown.removeItem((Object) ID);
+                employeeList.removeElement(ID);
             }
 
             else {
@@ -396,18 +399,13 @@ public class gui {
     }
 
     // Transfer Employee Panel
-    public static JPanel createTransferPanel(JPanel mainPanel) {
+    public  JPanel createTransferPanel(JPanel mainPanel) {
         JPanel panel = new JPanel(new GridLayout(8, 1, 5, 5));
         panel.add(new JLabel("<html><h2><center>Transfer Employees Here</center></h2></html>", JLabel.CENTER));
         panel.add(new JLabel("Choose an employee: ", JLabel.CENTER));
 
-        JComboBox<Integer> employeeDropdown = new JComboBox<>();
-        records.getEmployees();
-        for(int i = 0; i < records.employee_IDList.size();i++) {
-            if(records.termination_dateList.get(i) == null) {
-                employeeDropdown.addItem(records.employee_IDList.get(i));
-            }
-        }
+
+        JComboBox<Integer> employeeDropdown = new JComboBox<>(employeeList);
         panel.add(employeeDropdown);
 
         panel.add(new JLabel("New Department: ", JLabel.CENTER));
@@ -494,42 +492,48 @@ public class gui {
         // Action Listener for Hire Button
         hireButton.addActionListener(e -> {
             // Retrieve input values
-            String firstName = firstNameField.getText();
-            String lastName = lastNameField.getText();
-            String gender = (String) genderDropdown.getSelectedItem();
-            String departmentName = (String) departmentDropDown.getSelectedItem();
-            String positionType = positionTypeField.getText();
-            int yearsOfExperience = Integer.parseInt(yearsOfExperienceField.getText());
-            String education = educationField.getText();
-
-
 
             // Perform actions with the data (e.g., save to database, display message, etc.)
+                try {
 
-            if(hireTerminateTransfer.hire_employee(firstName, lastName, gender, departmentName, positionType, yearsOfExperience, education) == 1)
-            {
-                JOptionPane.showMessageDialog(
-                        panel,
-                        "Employee Hired:\n" +
-                                "Name: " + firstName + " " + lastName + "\n" +
-                                "Gender: " + gender + "\n" +
-                                "Department: " + departmentName + "\n" +
-                                "Position: " + positionType + "\n" +
-                                "Experience: " + yearsOfExperience + " years\n" +
-                                "Education: " + education,
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-            }
+                    String firstName = firstNameField.getText();
+                    String lastName = lastNameField.getText();
+                    String gender = (String) genderDropdown.getSelectedItem();
+                    String departmentName = (String) departmentDropDown.getSelectedItem();
+                    String positionType = positionTypeField.getText();
+                    int yearsOfExperience = Integer.parseInt(yearsOfExperienceField.getText());
+                    String education = educationField.getText();
 
-            else {
-                JOptionPane.showMessageDialog(
-                        panel,
-                        "Employee Hire Failed", "Employee Error",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-            }
+                    if(firstName.isEmpty() || lastName.isEmpty() || departmentName.isEmpty() || positionType.isEmpty() || education.isEmpty()) {
+                        JOptionPane.showMessageDialog(
+                                panel,
+                                "Employee Hire Failed", "Employee Error",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                    }
+                    else if(hireTerminateTransfer.hire_employee(firstName, lastName, gender, departmentName, positionType, yearsOfExperience, education) == 1)
+                    {
+                        JOptionPane.showMessageDialog(
+                                panel,
+                                "Employee Hired:\n" +
+                                        "Name: " + firstName + " " + lastName + "\n" +
+                                        "Gender: " + gender + "\n" +
+                                        "Department: " + departmentName + "\n" +
+                                        "Position: " + positionType + "\n" +
+                                        "Experience: " + yearsOfExperience + " years\n" +
+                                        "Education: " + education,
+                                "Success",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
 
+                    }
+                } catch(NumberFormatException error) {
+                    JOptionPane.showMessageDialog(
+                            panel,
+                            "Employee Hire Failed", "Employee Error",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
             // Clear fields after hiring
             firstNameField.setText("");
             lastNameField.setText("");
@@ -544,7 +548,7 @@ public class gui {
 
 
 
-    public static JPanel createChangeDisbursementPanel(JPanel mainPanel) {
+    public JPanel createChangeDisbursementPanel(JPanel mainPanel) {
         JPanel panel = new JPanel(new GridLayout(20, 1, 5, 5));
         employee_salary reference = new employee_salary();
 
@@ -554,14 +558,8 @@ public class gui {
         panel.add(new JLabel("Choose an employee: ", JLabel.CENTER));
 
         reference.fillLists();
-        records.getEmployees();
-        JComboBox<Integer> employeeDropdown = new JComboBox<>();
-        records.getEmployees();
-        for(int i = 0; i < records.employee_IDList.size();i++) {
-            if(records.termination_dateList.get(i) == null) {
-                employeeDropdown.addItem(records.employee_IDList.get(i));
-            }
-        }
+
+        JComboBox<Integer> employeeDropdown = new JComboBox<>(employeeList);
         panel.add(employeeDropdown);
 
 //        Salary
@@ -600,34 +598,45 @@ public class gui {
 
         // Action Listener for Hire Button
         updateSalary.addActionListener(e -> {
-            // Retrieve input values
-            int employeeID = (int) employeeDropdown.getSelectedItem();
-            Double newSalary = Double.parseDouble(salary.getText());
-            String bank = bankAcc.getText();
-            int overtime = Integer.parseInt(overtimeRecord.getText());
-            Double tax = Double.parseDouble(taxes.getText());
-            String benefits = benefitsList.getText();
-            Double raise = Double.parseDouble(raises.getText());
-            // Perform actions with the data (e.g., save to database, display message, etc.)
 
-            if(reference.register_salary(employeeID, newSalary, bank,overtime,tax,benefits, raise) == 1)
-            {
-                JOptionPane.showMessageDialog(
-                        panel,
-                        "Salary successfully updated!",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+            try {
+                // Retrieve input values
+                int employeeID = (int) employeeDropdown.getSelectedItem();
+                Double newSalary = Double.parseDouble(salary.getText());
+                String bank = bankAcc.getText();
+                int overtime = Integer.parseInt(overtimeRecord.getText());
+                Double tax = Double.parseDouble(taxes.getText());
+                String benefits = benefitsList.getText();
+                Double raise = Double.parseDouble(raises.getText());
+
+                if(bank.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            panel,
+                            "Please input a bank account!",
+                            "Error",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+
+                // Perform actions with the data (e.g., save to database, display message, etc.)
+                else if (reference.register_salary(employeeID, newSalary, bank,overtime,tax,benefits, raise) == 1)
+                {
+                    JOptionPane.showMessageDialog(
+                            panel,
+                            "Salary successfully updated!",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
             }
 
-            else {
+            catch(NumberFormatException error) {
                 JOptionPane.showMessageDialog(
                         panel,
                         "Salary failed to update", "Employee Error",
                         JOptionPane.INFORMATION_MESSAGE
                 );
             }
-
             // Clear fields after hiring
             salary.setText("");
             taxes.setText("");
