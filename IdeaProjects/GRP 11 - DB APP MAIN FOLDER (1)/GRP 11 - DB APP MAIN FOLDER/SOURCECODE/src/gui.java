@@ -92,7 +92,7 @@ public class gui {
         transactionsPanel.add(hireTerminateTransferButton);
 
         reportsPanel.add(new JLabel("<html><h2><center>Employee Reports</center></h2></html>", JLabel.CENTER));
-        JButton attendanceReportButton = new JButton("Generate Attendance Report");
+        JButton attendanceReportButton = new JButton("Generate Employee Count Report");
         JButton performanceReportButton = new JButton("Generate Performance Report per Year");
         JButton hiresAttritionReportButton = new JButton("Generate Hires and Attrition Report");
         JButton salaryReportButton = new JButton("Generate Salary Report per Year");
